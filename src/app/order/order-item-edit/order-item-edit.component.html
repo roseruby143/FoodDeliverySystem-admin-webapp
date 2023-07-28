@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="col-12 col-md-1 "></div>
+    <div class="col mx-4 mx-md-0 card px-0 my-4 justify-content-center shadow rounded-0">
+        <div class="row border-secondary rounded-0">
+            <div class="card-header col-12 col-md-4 d-flex pt-5 pb-3 rounded-0">
+                <div class="" *ngIf="this.orderItemInfo; else newOrderItem">
+                    <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title| titlecase}}</div>
+                    <img [src]="this.addOrderImage"  class="img-fluid rounded-circle mt-4 bg-white  w-75 mx-auto d-block" alt="" *ngIf="this.addOrderImage"/>
+                </div>
+            </div>
+            <div class="card-body col-12 col-md-8  px-5">
+                <form [formGroup]="orderItemListForm" (ngSubmit)="onFormSubmit()">
+                    <div class="pt-0">
+
+                        <div class="form-group row mt-1 pl-0" *ngIf="this.orderItemInfo">
+                            <label class="col-sm-3 px-0" for ="orderItemId">Order Item ID<sup
+                                class="text-danger">*</sup></label>
+                            <input type="number" class="form-control col-sm text-secondary bg-light" name="orderItemId" formControlName="orderItemId" readonly>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="dish">Dish</label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <select class="btn btn-outline-secondary text-start" id="dish" formControlName="dish" (change)="updateItemTotalPrice()">
+                                    <option class="dropdown-item" id="choosedish" [ngValue]="null" disabled>Choose a Dish</option>
+                                    <option [id]="d?.dishId" class="dropdown-item"  *ngFor="let d of this.allDishes" [ngValue]="d.dishId">
+                                        {{d.dish_name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="quantity">Quantity<sup class="text-danger">*</sup></label>
+                            <input type="number" class="form-control col-sm" name="quantity" formControlName="quantity" [ngClass]="{'is-invalid': displayMessage['quantity']}" (change)="updateItemTotalPrice()">
+                            <span class="invalid-feedback">
+                                {{displayMessage['quantity']}}
+                            </span>
+                        </div>
+
+                        <div class="form-group row mt-1 pl-0">
+                            <label class="col-sm-3 px-0" for ="itemTotalPrice">Total Items Price<sup class="text-danger">*</sup></label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <input type="number" class="form-control col-sm" name="itemTotalPrice" formControlName="itemTotalPrice" [ngClass]="{'is-invalid': displayMessage['itemTotalPrice']}" readonly>
+                                <span class="invalid-feedback">
+                                    {{displayMessage['itemTotalPrice']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-1 pl-0">
+                            <label class="col-sm-3 px-0" for ="order">Order<sup class="text-danger">*</sup></label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <input type="number" class="form-control col-sm" name="order" formControlName="order" [ngClass]="{'is-invalid': displayMessage['order']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['order']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div class="form-group row form-outline mb-4 mt-4 text-center" *ngIf="this.errorMessage">
+                            <div class="d-block col">
+                                <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                    <div>
+                                        &nbsp;&nbsp;{{ this.errorMessage }}
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row d-flex justify-content-sm-around mt-4">
+                            <button type="submit" id="editorderButton" class="col-12 col-sm-4 col-xl-3 btn btn-secondary " [disabled]="!orderItemListForm.valid">
+                                Save
+                            </button>
+                            <a type="button" class="col-12 col-sm-4 col-xl-3 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/orders',orderItemInfo?.order?.orderId]"  *ngIf="orderItemInfo?.order">
+                                View Order
+                            </a>
+                            <a type="button" class="col-12 col-sm-4 col-xl-3 my-2 my-sm-0 btn btn-secondary disabled"  *ngIf="!orderItemInfo?.order">
+                                View Order
+                            </a>
+                            <a type="button" class="col-12 col-sm-4 col-xl-3 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/dishes',orderItemInfo?.dish?.dishId]"  *ngIf="orderItemInfo?.dish">
+                                View Dish
+                            </a>
+                            <a type="button" class="col-12 col-sm-4 col-xl-3 my-2 my-sm-0 btn btn-secondary disabled"  *ngIf="!orderItemInfo?.dish">
+                                View Dish
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-1"></div>
+    <ng-template #newOrderItem>
+        <div class=" ">
+            <div class="h2 mt-4 text-center" id="exampleModalLabel">Add New Order Item</div>
+            <img [src]=this.addOrderImage  class="img-fluid rounded-circle mt-3 bg-white  w-75 mx-auto d-block" alt=""/>
+        </div>
+    </ng-template>
+</div>

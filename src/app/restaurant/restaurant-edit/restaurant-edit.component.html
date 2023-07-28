@@ -1,0 +1,156 @@
+<div class="row">
+    <div class="col-12 col-md-2 "></div>
+    <div class="col mx-4 mx-md-0 card px-0 my-4 justify-content-center shadow rounded-0">
+        <div class="row border-secondary rounded-0">
+            <div class="card-header col-12 col-md-4 d-flex pt-5 pb-3 rounded-0">
+                <div class="" *ngIf="this.restaurantInfo$ | async as restaurantInfo; else newRestaurant">
+                    <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title$ | async | titlecase}}</div>
+                    <img [src]=this.restaurantInfo.restaurantImageUrl  class="img-fluid rounded-circle mt-3" alt="" *ngIf="this.restaurantInfo?.restaurantImageUrl"/>
+                </div>
+            </div>
+
+            <div class="card-body col-12 col-md-8 px-5">
+                <form [formGroup]="restaurantListForm" (ngSubmit)="onFormSubmit()">
+                    <div class="pt-0">
+                        <div class="form-group row mt-1 pl-0" *ngIf="this.restaurantInfo$ | async">
+                            <label class="col-sm-3 px-0" for ="restaurantId">Restaurant ID<sup
+                                class="text-danger">*</sup></label>
+                            <input type="number" class="form-control col-sm text-secondary bg-light" name="restaurantId" formControlName="id" readonly>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="restaurantName">Name<sup
+                                class="text-danger">*</sup></label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="text" id="restaurantName" class="form-control col" name="restaurantName" formControlName="name" [ngClass]="{'is-invalid': displayMessage['name']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['name']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="address">Address<sup
+                                class="text-danger">*</sup></label>
+                                <div class="d-block col-sm-9 px-0">
+                                    <input type="text" id="address" class="form-control col" name="address" formControlName="address" [ngClass]="{'is-invalid': displayMessage['address']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['address']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="restaurantPhone">Phone<sup
+                                class="text-danger">*</sup></label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="tel" id="restaurantPhone" class="form-control col" name="restaurantPhone" formControlName="phone" [ngClass]="{'is-invalid': displayMessage['phone']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['phone']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="restaurantEmail">Email<sup
+                                class="text-danger">*</sup></label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="email" id="restaurantEmail" class="form-control col " name="restaurantEmail" formControlName="email" [ngClass]="{'is-invalid': displayMessage['email']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['email']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="contactPerson">Contact Person<sup
+                                class="text-danger">*</sup></label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="text" id="contactPerson" class="form-control col" name="contactPerson" formControlName="contact_person" [ngClass]="{'is-invalid': displayMessage['contact_person']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['contact_person']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="restaurantDesc">Description</label>
+                            <textarea rows="5" cols="10" id="restaurantDesc" class="form-control col" name="restaurantDesc" formControlName="description"></textarea>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="restaurantCategory">Category</label>
+                            <input type="text" id="restaurantCategory" class="form-control col" name="restaurantCategory" formControlName="category">
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="rating">Rating</label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="text" id="rating" placeholder="1(lowest) to 5(highest)" class="form-control col" name="rating" formControlName="rating" [ngClass]="{'is-invalid': displayMessage['rating']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['rating']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="imgUrl">Image Url</label>
+                            <input type="text" id="imgUrl" class="form-control col" name="imgUrl" formControlName="restaurantImageUrl">
+                        </div>
+
+                        <!-- Error Message -->
+                        <div class="form-group row form-outline mb-4 text-center" *ngIf="this.errorMessage">
+                            <div class="d-block col">
+                                <span class="custom-invalid-feedback">
+                                    {{ this.errorMessage }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-sm-around mt-4">
+                            <button type="submit" id="editRestaurantButton" class="col-12 col-sm-3 col-xl-3 btn btn-secondary " [disabled]="!restaurantListForm.valid">
+                                Save
+                            </button>
+                            <a type="button" class="col-12 col-sm-3 col-xl-3 my-2 my-sm-0 btn btn-secondary" (click)="openDeleteRestaurantModal(deleteRestaurantModal)" *ngIf="(restaurantInfo$ | async) && restaurantListForm.valid">
+                                Delete
+                            </a>
+                            <a type="button" class="col-12 col-sm-3 col-xl-3 my-2 my-sm-0 btn btn-secondary disabled"  *ngIf="(restaurantInfo$ | async) && !restaurantListForm.valid">
+                                Delete
+                            </a>
+
+                            <a type="button" id="dishesRestaurantButton" class="col-12 col-sm-3 col-xl-3 btn btn-secondary" (click)="goToDishes()" *ngIf="(restaurantInfo$ | async) && restaurantListForm.valid">
+                                View Dishes
+                            </a>
+                            <a type="button" id="dishesRestaurantButton" class="col-12 col-sm-3 col-xl-3 btn btn-secondary disabled" *ngIf="(restaurantInfo$ | async) && !restaurantListForm.valid">
+                                View Dishes
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-1"></div>
+    <ng-template #newRestaurant>
+        <div class="custom-add-element">
+            <div class="h2 mt-4 text-center" id="exampleModalLabel">Add New Restaurant</div>
+            <img [src]=this.addRestaurantImage  class="img-fluid rounded-circle mt-3 bg-white w-75 mx-auto d-block" alt=""/>
+        </div>
+    </ng-template>
+</div>
+
+<ng-template #deleteRestaurantModal let-modal>
+	<div class="modal-header ">
+		<h4 class="modal-title" id="modal-basic-title">Delete Restaurant</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<div class="my-2 d-flex  flex-column align-items-center">
+            <p class="font-weight-bold"><strong>Confirm if you want to delete the Restaurant.</strong></p> 
+            <p class="font-weight-bold"><strong>Once deleted it cannot be reverted back.</strong></p>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn  me-1" (click)="onDelete()">Delete Restaurant</button>
+	</div>
+</ng-template>

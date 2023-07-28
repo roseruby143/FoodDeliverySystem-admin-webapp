@@ -1,0 +1,168 @@
+<div class="row">
+    <div class="col-12 col-md-1 "></div>
+    <div class="col mx-4 mx-md-0 card px-0 my-4 justify-content-center shadow rounded-0">
+        <div class="row border-secondary rounded-0">
+            <div class="card-header col-12 col-md-4 d-flex pt-5 pb-3 rounded-0">
+                <div class="" *ngIf="this.driverInfo; else newDriver">
+                    <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title| titlecase}}</div>
+                    <img [src]=this.driverInfo.imgUrl  class="img-fluid rounded-circle mt-4 bg-white  w-75 mx-auto d-block" alt="" *ngIf="this.driverInfo?.imgUrl"/>
+                </div>
+            </div>
+            <div class="card-body col-12 col-md-8  px-5">
+                <form [formGroup]="driverListForm" (ngSubmit)="onFormSubmit()">
+                    <div class="pt-0">
+                        <!--  Address -->
+                        <div class="my-5 custom-hr">
+                            <span>
+                                Personal Information
+                            </span>
+                        </div>
+
+                        <div class="form-group row mt-1 pl-0" *ngIf="this.driverInfo">
+                            <label class="col-sm-3 px-0" for ="DriverId">Driver ID<sup
+                                class="text-danger">*</sup></label>
+                            <input type="number" class="form-control col-sm text-secondary bg-light" name="DriverId" formControlName="id" readonly>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="DriverEmail">Email<sup
+                                class="text-danger">*</sup></label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="email" id="DriverEmail" class="form-control col" name="DriverEmail" formControlName="email" [ngClass]="{'is-invalid': displayMessage['email']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['email']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="first_name">First Name<sup
+                                class="text-danger">*</sup></label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="text" id="first_name" class="form-control col" name="first_name" formControlName="first_name" [ngClass]="{'is-invalid': displayMessage['first_name']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['first_name']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="last_name">Last Name</label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="text" id="last_name" class="form-control col" name="last_name" formControlName="last_name">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="phone">Phone<sup
+                                class="text-danger">*</sup></label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="tel" id="phone" class="form-control col" name="phone" formControlName="phone" [ngClass]="{'is-invalid': displayMessage['phone']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['phone']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="vehicalNumber">Vehical Number<sup
+                                class="text-danger">*</sup></label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="vehicalNumber" id="vehicalNumber" class="form-control col" name="vehicalNumber" formControlName="vehicalNumber" [ngClass]="{'is-invalid': displayMessage['vehicalNumber']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['vehicalNumber']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!--  Account Information -->
+                        <div class="my-5 custom-hr">
+                            <span>
+                                Account Information
+                            </span>
+                        </div>
+
+                        <div class="dropdown row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="status">Status</label>
+                            <div class="d-block col-sm-9 px-0">
+                                <select class="btn btn-outline-secondary text-start col" id="restDeatilDropdown" formControlName="status" [ngClass]="{'is-invalid': displayMessage['status']}">
+                                    <option class="dropdown-item" id="chooseStatus" [ngValue]="null" disabled>Choose a Status</option>
+                                    <option id="active" class="dropdown-item"  value="active">
+                                        Active
+                                    </option>
+                                    <option id="inactive" class="dropdown-item"  value="inactive">
+                                        Deactivate
+                                    </option>
+                                </select>
+                                <span class="invalid-feedback">
+                                    {{displayMessage['status']}}
+                                </span>
+                            </div>
+                            <!-- <input type="text" id="status" class="form-control col" name="status" formControlName="status"> -->
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="rating">Rating</label>
+                            <input type="text" id="rating" class="form-control col" name="rating" formControlName="rating">
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="imgUrl">Image Url</label>
+                            <input type="text" id="imgUrl" class="form-control col" name="imgUrl" formControlName="imgUrl">
+                        </div>
+
+                        <!-- Error Message -->
+                        <div class="form-group row form-outline mb-4 mt-4 text-center" *ngIf="this.errorMessage">
+                            <div class="d-block col">
+                                <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                    <div>
+                                        &nbsp;&nbsp;{{ this.errorMessage }}
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row d-flex justify-content-sm-around mt-4">
+                            <button type="submit" id="editDriverButton" class="col-12 col-sm-3 col-xl-2 btn btn-secondary " [disabled]="!driverListForm.valid">
+                                Save
+                            </button>
+                            <a type="button" class="col-12 col-sm-3 col-xl-2 my-2 my-sm-0 btn btn-secondary" (click)="openDeactivateDriverModal(DeactivateDriverModal)" *ngIf="driverInfo && driverListForm.valid">
+                                {{ driverInfo.status?.toLowerCase() === 'active' ? 'Deactivate' : 'Activate'}}
+                            </a>
+                            <a type="button" class="col-12 col-sm-3 col-xl-2 my-2 my-sm-0 btn btn-secondary disabled"  *ngIf="driverInfo && !driverListForm.valid">
+                                {{ driverInfo.status?.toLowerCase() === 'active' ? 'Deactivate' : 'Activate'}}
+                            </a>
+                            <a type="button" class="col-12 col-sm-3 col-xl-2 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/drivers']">
+                                All Drivers
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-1"></div>
+    <ng-template #newDriver>
+        <div class=" ">
+            <div class="h2 mt-4 text-center" id="exampleModalLabel">Add New Driver</div>
+            <img [src]=this.addDriverImage  class="img-fluid rounded-circle mt-3 bg-white  w-75 mx-auto d-block" alt=""/>
+        </div>
+    </ng-template>
+</div>
+
+<ng-template #DeactivateDriverModal let-modal>
+	<div class="modal-header ">
+		<h4 class="modal-title" id="modal-basic-title">Deactivate Driver</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<div class="my-2 d-flex  flex-column align-items-center">
+            <p class="font-weight-bold"><strong>Confirm if you want to Deactivate the Driver <u>{{driverInfo?.first_name}}</u> with id <u>{{driverInfo?.id}}</u></strong></p> 
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn  me-1" (click)="onDeactivate()">Deactivate Driver</button>
+	</div>
+</ng-template>

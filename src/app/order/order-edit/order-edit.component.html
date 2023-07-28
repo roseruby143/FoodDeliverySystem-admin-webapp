@@ -1,0 +1,196 @@
+<div class="row">
+    <div class="col-12 col-md-1 "></div>
+    <div class="col mx-4 mx-md-0 card px-0 my-4 justify-content-center shadow rounded-0">
+        <div class="row border-secondary rounded-0">
+            <div class="card-header col-12 col-md-4 d-flex pt-5 pb-3 rounded-0">
+                <div class="" *ngIf="this.orderInfo; else newOrder">
+                    <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title| titlecase}}</div>
+                    <img [src]="this.addOrderImage"  class="img-fluid rounded-circle mt-4 bg-white  w-75 mx-auto d-block" alt="" *ngIf="this.addOrderImage"/>
+                </div>
+            </div>
+            <div class="card-body col-12 col-md-8  px-5">
+                <form [formGroup]="orderListForm" (ngSubmit)="onFormSubmit()">
+                    <div class="pt-0">
+
+                        <div class="form-group row mt-1 pl-0" *ngIf="this.orderInfo">
+                            <label class="col-sm-3 px-0" for ="orderId">Order ID<sup
+                                class="text-danger">*</sup></label>
+                            <input type="number" class="form-control col-sm text-secondary bg-light" name="orderId" formControlName="id" readonly>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="orderStatus">Order Status<sup
+                                class="text-danger">*</sup></label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <select class="btn btn-outline-secondary text-start" id="orderStatus" formControlName="orderStatus" [ngClass]="{'is-invalid': displayMessage['orderStatus']}">
+                                    <option class="dropdown-item" id="chooseorderStatus" [ngValue]="null" disabled>Choose a order Status</option>
+                                    <option [id]="status?.id" class="dropdown-item"  *ngFor="let status of this.orderStatus" [ngValue]="status.status">
+                                        {{status.status}}
+                                    </option>
+                                </select>
+                                <span class="invalid-feedback">
+                                    {{displayMessage['orderStatus']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-1 pl-0">
+                            <label class="col-sm-3 px-0" for ="totalItems">Total Items<sup class="text-danger">*</sup></label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <input type="number" class="form-control col-sm" name="totalItems" formControlName="totalItems" [ngClass]="{'is-invalid': displayMessage['totalItems']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['totalItems']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-1 pl-0">
+                            <label class="col-sm-3 px-0" for ="itemsSubTotal">Sub Total<sup class="text-danger">*</sup></label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <input type="number" class="form-control col-sm" name="itemsSubTotal" formControlName="itemsSubTotal" [ngClass]="{'is-invalid': displayMessage['itemsSubTotal']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['itemsSubTotal']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-1 pl-0">
+                            <label class="col-sm-3 px-0" for ="taxCharges">Tax<sup
+                                class="text-danger">*</sup></label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <input type="number" class="form-control col-sm" name="taxCharges" formControlName="taxCharges" [ngClass]="{'is-invalid': displayMessage['taxCharges']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['taxCharges']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-1 pl-0">
+                            <label class="col-sm-3 px-0" for ="deliveryCharges">Delivery Charges<sup
+                                class="text-danger">*</sup></label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <input type="number" class="form-control col-sm" name="deliveryCharges" formControlName="deliveryCharges" [ngClass]="{'is-invalid': displayMessage['deliveryCharges']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['deliveryCharges']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-1 pl-0">
+                            <label class="col-sm-3 px-0" for ="driverTip">Drivers Tip<sup
+                                class="text-danger">*</sup></label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <input type="number" class="form-control col-sm" name="driverTip" formControlName="driverTip" [ngClass]="{'is-invalid': displayMessage['driverTip']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['driverTip']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-1 pl-0">
+                            <label class="col-sm-3 px-0" for ="totalAmount">TotalAmount<sup
+                                class="text-danger">*</sup></label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <input type="number" class="form-control col-sm" name="totalAmount" formControlName="totalAmount" [ngClass]="{'is-invalid': displayMessage['totalAmount']}">
+                                <span class="invalid-feedback">
+                                    {{displayMessage['totalAmount']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="paymentStatus">Payment Status</label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <select class="btn btn-outline-secondary text-start" id="paymentStatus" formControlName="paymentStatus">
+                                    <option class="dropdown-item" id="choosepaymentStatus" [ngValue]="null" disabled>Choose a payment Status</option>
+                                    <option [id]="status?.id" class="dropdown-item"  *ngFor="let status of this.paymentStatus" [ngValue]="status.id">
+                                        {{status.status}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="paymentMethod">Payment Method</label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <select class="btn btn-outline-secondary text-start" id="paymentMethod" formControlName="paymentMethod">
+                                    <option class="dropdown-item" id="choosepaymentMethod" [ngValue]="null" disabled>Choose a payment Status</option>
+                                    <option [id]="method?.id" class="dropdown-item"  *ngFor="let method of this.paymentMethod" [ngValue]="method.id">
+                                        {{method.method}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="orderDate">Order Date</label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="text" id="orderDate" class="form-control col" name="orderDate" formControlName="orderDate">
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="delivery">Delivery</label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="number" id="delivery" class="form-control col" name="delivery" formControlName="delivery">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="user">User<sup
+                                class="text-danger">*</sup></label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <select class="btn btn-outline-secondary text-start" id="user" formControlName="user" [ngClass]="{'is-invalid': displayMessage['user']}">
+                                    <option class="dropdown-item" id="chooseUser" [ngValue]="null" disabled>Choose a User</option>
+                                    <option [id]="rest?.id" class="dropdown-item"  *ngFor="let rest of allUsers" [ngValue]="rest.id">
+                                        {{rest?.first_name}} {{rest.last_name}}
+                                    </option>
+                                </select>
+                                <span class="invalid-feedback">
+                                    {{displayMessage['user']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div class="form-group row form-outline mb-4 mt-4 text-center" *ngIf="this.errorMessage">
+                            <div class="d-block col">
+                                <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                    <div>
+                                        &nbsp;&nbsp;{{ this.errorMessage }}
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row d-flex justify-content-sm-around mt-4">
+                            <button type="submit" id="editorderButton" class="col-12 col-sm-4 col-xl-3 btn btn-secondary " [disabled]="!orderListForm.valid">
+                                Save
+                            </button>
+                            <a type="button" class="col-12 col-sm-4 col-xl-3 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/orders',orderInfo?.orderId,'orderitems']">
+                                View Order Items
+                            </a>
+                            <a type="button" class="col-12 col-sm-4 col-xl-3 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/orders',orderInfo?.orderId,'deliveriy']"  *ngIf="orderInfo?.delivery">
+                                View Delivery
+                            </a>
+                            <a type="button" class="col-12 col-sm-4 col-xl-3 my-2 my-sm-0 btn btn-secondary disabled"  *ngIf="!orderInfo?.delivery">
+                                View Delivery
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-1"></div>
+    <ng-template #newOrder>
+        <div class=" ">
+            <div class="h2 mt-4 text-center" id="exampleModalLabel">Add New order</div>
+            <img [src]=this.addOrderImage  class="img-fluid rounded-circle mt-3 bg-white  w-75 mx-auto d-block" alt=""/>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-12 col-md-1 "></div>
+    <div class="col mx-4 mx-md-0 card px-0 my-4 justify-content-center shadow rounded-0">
+        <div class="row border-secondary rounded-0">
+            <div class="card-header col-12 col-md-4 d-flex pt-5 pb-3 rounded-0">
+                <div class="" *ngIf="this.deliveryInfo; else newDelivery">
+                    <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title| titlecase}}</div>
+                    <img [src]="this.addDeliveryImage"  class="img-fluid rounded-circle mt-4 bg-white  w-75 mx-auto d-block" alt="" *ngIf="this.addDeliveryImage"/>
+                </div>
+            </div>
+            <div class="card-body col-12 col-md-8  px-5">
+                <form [formGroup]="deliveryListForm" (ngSubmit)="onFormSubmit()">
+                    <div class="pt-0">
+
+                        <div class="form-group row mt-1 pl-0" *ngIf="this.deliveryInfo">
+                            <label class="col-sm-3 px-0" for ="deliveryId">Delivery ID<sup
+                                class="text-danger">*</sup></label>
+                            <input type="number" class="form-control col-sm text-secondary bg-light" name="deliveryId" formControlName="id" readonly>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="deliveryStatus">Delivery Status<sup
+                                class="text-danger">*</sup></label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <select class="btn btn-outline-secondary text-start" id="deliveryStatus" formControlName="deliveryStatus" [ngClass]="{'is-invalid': displayMessage['deliveryStatus']}">
+                                    <option class="dropdown-item" id="chooseDeliveryStatus" [ngValue]="null" disabled>Choose a Delivery Status</option>
+                                    <option [id]="status?.id" class="dropdown-item"  *ngFor="let status of this.deliveryStatus" [ngValue]="status.id">
+                                        {{status?.id}} - {{status.status}}
+                                    </option>
+                                </select>
+                                <span class="invalid-feedback">
+                                    {{displayMessage['deliveryStatus']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="deliveryDate">Delivery Date</label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="text" id="deliveryDate" class="form-control col" name="deliveryDate" formControlName="deliveryDate" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="deliveryInstruction">Delivery Instruction</label>
+                            <div class="d-block col-sm-9 px-0">
+                                <textarea rows="5" cols="10" id="deliveryInstruction" class="form-control col" name="deliveryInstruction" formControlName="deliveryInstruction"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="deliveryDriver">Driver<sup
+                                class="text-danger">*</sup></label>
+                            <div class="dropdown d-block col-sm-9 px-0">
+                                <select class="btn btn-outline-secondary text-start" id="driverDropdown" formControlName="driver" [ngClass]="{'is-invalid': displayMessage['driver']}">
+                                    <option class="dropdown-item" id="chooseDriver" [ngValue]="null" disabled>Choose a Driver</option>
+                                    <option [id]="rest?.id" class="dropdown-item"  *ngFor="let rest of allDrivers" [ngValue]="rest.id">
+                                        {{rest?.first_name}} {{rest.last_name}}
+                                    </option>
+                                </select>
+                                <span class="invalid-feedback">
+                                    {{displayMessage['driver']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div class="form-group row form-outline mb-4 mt-4 text-center" *ngIf="this.errorMessage">
+                            <div class="d-block col">
+                                <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                    <div>
+                                        &nbsp;&nbsp;{{ this.errorMessage }}
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row d-flex justify-content-sm-around mt-4">
+                            <button type="submit" id="editDeliveryButton" class="col-12 col-sm-4 col-xl-3 btn btn-secondary " [disabled]="!deliveryListForm.valid">
+                                Save
+                            </button>
+                            <a type="button" class="col-12 col-sm-4 col-xl-3 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/deliveries']">
+                                View Deliveries
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-1"></div>
+    <ng-template #newDelivery>
+        <div class=" ">
+            <div class="h2 mt-4 text-center" id="exampleModalLabel">Add New Delivery</div>
+            <img [src]=this.addDeliveryImage  class="img-fluid rounded-circle mt-3 bg-white  w-75 mx-auto d-block" alt=""/>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,105 @@
+<div class="custom_header px-3 px-sm-4">
+    <nav class="navbar navbar-expand-lg  navbar-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarSupportedContent" aria-controls="mainNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand my-0 py-0 h1" routerLink='{{status ? "/restaurants" : "/login" }}' >
+                <img src="./../../assets/img/logo.png" width="110" height="80" class="d-inline-block align-top  custom_logo" alt="Eat Out">
+            </a>
+            <div class="collapse navbar-collapse justify-content-between" id="mainNavbarSupportedContent">
+                <div></div>
+                <ul class="navbar-nav px-3"  *ngIf="status">
+                    <li class="nav-item dropdown px-2 h6" ngbDropdown *ngFor="let navlistName of navBarList">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" [id]='navlistName.navLis'
+                            data-bs-toggle="dropdown" aria-expanded="false" aria-current="page">
+                            {{navlistName.navLis}}
+                        </a>
+
+                        <ul ngbDropdownMenu class="dropdown-menu custom-dropdown-menu" aria-labelledby='navlistName.navLis'>
+                            <span *ngFor="let listDropDown of navlistName.navListDropdown" class=""><a class="dropdown-item" [routerLink]='listDropDown.listValue'>{{listDropDown.listName}}</a>
+                                <div class="dropdown-divider"></div>
+                            </span>
+                            
+                        </ul>
+
+
+                        <!-- <div class="dropdown-menu  custom-dropdown-menu"  aria-labelledby='navlistName.navLis'>
+                            <span *ngFor="let listDropDown of navlistName.navListDropdown" class=""><a class="dropdown-item textWhiteBold navHoverCust" [routerLink]='listDropDown.listValue'>{{listDropDown.listName}}</a>
+                            </span>
+                        </div> -->
+                        <div class="dropdown-divider"></div>
+                        
+                    </li>
+
+                    <!-- <li ngbDropdown class="nav-item dropdown px-4 h5">
+                        <a class="nav-link dropdown-toggle" id="restaurantNavbarDropdown" data-toggle="dropdown"  role="button" ngbDropdownToggle aria-expanded="false" aria-current="page">
+                            Restaurants
+                        </a>
+                        <ul ngbDropdownMenu class="dropdown-menu custom-dropdown-menu" aria-labelledby="restaurantNavbarDropdown">
+                            <li>
+                                <a ngbDropdownItem class="dropdown-item" [routerLink]="['restaurants']">View Restaurants</a>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li>
+                                <a ngbDropdownItem class="dropdown-item" [routerLink]="['/restaurants','0','edit']">Add Restaurant</a>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li>
+                                <a ngbDropdownItem class="dropdown-item" [routerLink]="['dishes']">View Dishes</a>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li>
+                                <a ngbDropdownItem class="dropdown-item" [routerLink]="['/dishes','0','edit']">Add Dish</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li ngbDropdown class="nav-item dropdown px-4  h5">
+                        <a class="nav-link dropdown-toggle" id="driversNavbarDropdown" data-toggle="dropdown"  role="button" ngbDropdownToggle aria-expanded="false" aria-current="page">
+                            Drivers
+                        </a>
+                        <ul ngbDropdownMenu class="dropdown-menu custom-dropdown-menu" aria-labelledby="driversNavbarDropdown">
+                            <li>
+                                <a ngbDropdownItem class="dropdown-item" [routerLink]="['/restaurants']">View Drivers</a>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li>
+                                <a ngbDropdownItem class="dropdown-item" [routerLink]="['/']">Add Drivers</a>
+                            </li>
+                        </ul>
+                    </li> -->
+
+                </ul>
+                <ul class="navbar-nav px-3">
+                    <li ngbDropdown class="nav-item dropdown px-4 h5" *ngIf="status">
+                        <a class="nav-link dropdown-toggle" id="accountDropdownMenuLink" role="button" ngbDropdownToggle aria-expanded="false">
+                            <i class="fa fa-user"></i> 
+                        </a>
+                        <ul ngbDropdownMenu class="dropdown-menu  custom-dropdown-menu" aria-labelledby="accountDropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item" [routerLink]="['admin',this.adminId,'profile']">Profile</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <li>
+                            <a class="dropdown-item" (click)="onLogout()">Logout</a>
+                        </li>
+                        
+                        </ul>
+                    </li>
+                    <li class="nav-item  px-4 py-1 h5" *ngIf="!status">
+                        <a class="nav-link" [routerLink]="['/login']">Login/Register</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mx-3"> 
+
+                <ng-template #isLogOut>
+                            <a class="nav-link textWhiteBold h5" [routerLink]="['/login']">Login</a>
+                </ng-template>                   
+                
+            </div>
+        </div>
+    </nav>
+</div>
