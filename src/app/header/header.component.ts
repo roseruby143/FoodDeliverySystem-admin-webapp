@@ -45,7 +45,6 @@ export class HeaderComponent implements OnInit {
             {'listName':'View Orders','listValue':'/orders'},
             {'listName':'Add Orders','listValue':'/orders/0/edit'},
             {'listName':'View OrderItems','listValue':'/orderitems'},
-            {'listName':'Add OrderItems','listValue':'/orderitems/0/edit'},
             {'listName':'View Deliveries','listValue':'/deliveries'},
             {'listName':'Add Deliveries','listValue':'/deliveries/0/edit'}
         ]
@@ -88,12 +87,8 @@ export class HeaderComponent implements OnInit {
 
   onLogout(){
 
-    this._loginService.onLogOut(+localStorage.getItem('userId')!).subscribe({
-      next : (data) => {
-        console.log(`logout data is: ${data}`);
-        localStorage.clear();
-        //this.isUserLoggedIn = false;
-        this._router.navigate(['/login']);
+    this._sub = this._loginService.onLogOut(+localStorage.getItem('adminId')!).subscribe({
+      next : () => {
       },
       error : err => {
         console.log(`Error while logging out : ${err}`);

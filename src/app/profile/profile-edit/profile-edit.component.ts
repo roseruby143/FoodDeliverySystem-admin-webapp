@@ -17,6 +17,7 @@ export class ProfileEditComponent implements OnInit {
 
   private _sub:Subscription | undefined;
   addProfileImage! : string;
+  selectedFile: File | undefined;
 
   // For validations
   displayMessage: { [key: string]: string } = {};
@@ -29,6 +30,8 @@ export class ProfileEditComponent implements OnInit {
   adminListForm!: FormGroup;
   editAdmin:boolean = false;
   errorMessage:string='';
+
+  updateSuccess : boolean = false;
 
   constructor(private _fb : FormBuilder, private _route: ActivatedRoute, private _profileService : ProfileService, private _router : Router, private _datePipe : DatePipe ) { 
     this._validationMessages = {
@@ -153,8 +156,10 @@ export class ProfileEditComponent implements OnInit {
             this.adminInfo = data
             this.adminDisplay(data);
             //this.onFormSubmitComplete(data)
+            this.updateSuccess = true;
           },
           error : err => {
+            this.updateSuccess = false;
             this.errorMessage = err.error.message;
           }
         });
@@ -175,4 +180,28 @@ export class ProfileEditComponent implements OnInit {
     this.adminListForm.reset();
     this._router.navigate(['/admin',this.adminInfo?.adminId,'profile']);
   }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  uploadFile() {
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+    this._profileService.saveImage(formData)
+    .subscribe({
+      next : (response) => {
+      // Handle successful upload response
+      console.log('File uploaded successfully:', response);
+      }, 
+      error : (err) => {
+      // Handle upload error
+      console.error('File upload error:', err);
+      }
+    });
+      
+    }
+  }
+
 }

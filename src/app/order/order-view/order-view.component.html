@@ -95,7 +95,7 @@
                                             <u role="button" [routerLink]="['/drivers',data.delivery?.driver?.id]" *ngIf="data.delivery?.driver">{{data.delivery?.driver?.first_name}} {{data.delivery?.driver?.last_name}} </u>
                                             <span *ngIf="!data.delivery?.driver">Not Assigned</span>
                                         </td>
-                                        <td><p>{{data.address.street}}, {{data.address.city}}, {{data.address.state}}{{data.address.pincode}}</p></td>
+                                        <td><p *ngIf="data.address">{{data.address.street!}}, {{data.address.city!}}, {{data.address.state!}}{{data.address.pincode!}}</p></td>
                                         <td>{{data.orderDate | date}}</td>
                                         <td class="d-flex justify-content-evenly">
                                             <a  role="button" [routerLink]="['/orders',data.orderId,'edit']"><i class="fa fa-edit custIconColor" title="Edit Orders"></i></a>

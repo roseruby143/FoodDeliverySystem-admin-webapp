@@ -26,17 +26,15 @@ export class LoginService {
   }
 
   isLoggedIn():boolean {
-    let user = localStorage.getItem('user');
+    let adminId = localStorage.getItem('adminId');
     let status = localStorage.getItem('status');
-    return !(!user && !status);
-  }
-
-  getUser() {
-    return localStorage.getItem('user');
+    return !(!adminId && !status);
   }
   
   onLogOut(adminId:number) {
-    return this._httpClient.post<any>(`${environment.baseUrl}/v1/user/${adminId}/logout`,{id:adminId},{headers:this._headers})
-    .pipe(tap(data => console.log(`logout response : ${data}`)));
+    return this._httpClient.post<any>(`${environment.baseUrl}/v1/admin/${adminId}/logout`,{id:adminId})
+    /* .pipe(
+      //tap(data => console.log(`logout response : ${data}`))
+    ) */;
   }
 }

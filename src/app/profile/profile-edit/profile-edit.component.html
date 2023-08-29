@@ -3,9 +3,15 @@
     <div class="col mx-4 mx-md-0 card px-0 my-4 justify-content-center shadow rounded-0">
         <div class="row border-secondary rounded-0">
             <div class="card-header col-12 col-md-4 d-flex pt-5 pb-3 rounded-0">
-                <div class="" *ngIf="this.adminInfo; else newAdmin">
-                    <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title| titlecase}}</div>
-                    <img [src]="this.addProfileImage"  class="img-fluid rounded-circle mt-4 bg-white  w-75 mx-auto d-block" alt="" *ngIf="this.addProfileImage"/>
+                <div class="row d-flex flex-column justify-content-center">
+                    <div class="" *ngIf="this.adminInfo; else newAdmin">
+                        <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title| titlecase}}</div>
+                        <img [src]="this.addProfileImage"  class="img-fluid rounded-circle mt-4 bg-white  w-75 mx-auto d-block" alt="" *ngIf="this.addProfileImage"/>
+                    </div>
+                    <!-- <div class="mt-4 d-flex flex-column justify-content-center">
+                        <input type="file" (change)="onFileSelected($event)">
+                        <button (click)="uploadFile()">Upload</button>
+                    </div>  -->   
                 </div>
             </div>
             <div class="card-body col-12 col-md-8  px-5">
@@ -72,6 +78,14 @@
                             <div class="d-block col-sm-8">
                                 <input type="text" id="addedOn" class="form-control  text-secondary bg-light" formControlName="addedOn" readonly>
                             </div>
+                        </div>
+                        
+                        <!-- Register Success Message -->
+                        <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert" *ngIf="this.updateSuccess">
+                            <span> User Data updated successfully.</span>
+                            <a type="button" href="" class="custom-alert close" data-bs-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </a>
                         </div>
 
                         <!-- Error Message -->

@@ -130,7 +130,7 @@ export class LoginComponent implements OnInit {
         next : (response:Admin) => { 
           if(response.adminId != null) {
             localStorage.setItem('adminId', response.adminId.toLocaleString());
-            localStorage.setItem('user', response.email);
+            //localStorage.setItem('user', response.email);
             localStorage.setItem('status', 'loggedIn');
             this._router.navigateByUrl('/restaurants');
           }

@@ -34,4 +34,8 @@ export class ProfileService {
   editAdmin(data:Admin):Observable<Admin>{
     return this._httpClient.put<Admin>(`${environment.baseUrl}/v1/admin/${data.adminId}`,data,{headers:this._headers});
   }
+
+  saveImage(formData:FormData):Observable<any>{
+    return this._httpClient.post('your-server-upload-endpoint', formData);
+  }
 }

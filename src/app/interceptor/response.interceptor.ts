@@ -9,28 +9,33 @@ import {
   HttpEventType,
   HttpErrorResponse
 } from '@angular/common/http';
-import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {
 
-  constructor(private _router : Router) {}
+  constructor(private router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(request).pipe(
-      catchError(
-        err =>
-          new Observable<HttpEvent<any>>(observer => {
-            if (err instanceof HttpErrorResponse) {
-              const errResp = <HttpErrorResponse>err;
-              if (errResp.status === 401) {
-                console.log(errResp);
-              }
-            }
-            observer.error(err);
-            observer.complete();
-          })
-      )
-    );
+    // const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    // if (currentUser && currentUser.token) {
+    //   request = request.clone({
+    //     setHeaders: {
+    //       'Content-Type': 'application/json',
+    //       Authorization: `JWT ${currentUser.token}`
+    //     }
+    //   });
+    // }
+
+    return next.handle(request).pipe( tap(() => {},
+      (err: any) => {
+      if (err instanceof HttpErrorResponse) {
+        if (err.status !== 401) {
+         return;
+        }
+        localStorage.clear(); 
+        this.router.navigate(['login']);
+      }
+    }));
   }
 }
