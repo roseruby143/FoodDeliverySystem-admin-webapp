@@ -34,7 +34,7 @@ import { DeliveryViewComponent } from './delivery-view/delivery-view.component';
       {path:'orderitems/:id', component:OrderItemEditComponent, canActivate:[AuthenticationGuard]},
       {path:'orderitems/:id/edit', component:OrderItemEditComponent, canActivate:[AuthenticationGuard]},
       {path:'deliveries', component:DeliveryViewComponent, canActivate:[AuthenticationGuard]},
-      {path:'driver/:id/deliveries', component:DeliveryViewComponent, canActivate:[AuthenticationGuard]},
+      {path:'driver/:driverId/deliveries', component:DeliveryViewComponent, canActivate:[AuthenticationGuard]},
       {path:'deliveries/:id', component:DeliveryViewComponent, canActivate:[AuthenticationGuard]},
       {path:'deliveries/:id/edit', component:DeliveryEditComponent, canActivate:[AuthenticationGuard]}
     ])

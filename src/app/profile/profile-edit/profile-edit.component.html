@@ -37,11 +37,7 @@
                             <label class="form-label d-block col-sm-3 px-0" for="email">Email<sup
                                 class="text-danger">*</sup></label>
                             <div class="d-block col-sm-8">
-                                <input type="email" id="email" class="form-control text-secondary bg-light" formControlName="email" 
-                                [ngClass]="{'is-invalid': displayMessage['email']}" readonly>
-                                <span class="invalid-feedback">
-                                    {{displayMessage['email']}}
-                                </span>
+                                <input type="email" id="email" class="form-control text-secondary bg-light" formControlName="email" readonly>
                             </div>
                         </div>
 
@@ -67,6 +63,14 @@
                                 <span class="invalid-feedback">
                                     {{displayMessage['imgUrl']}}
                                 </span>
+                            </div>
+                        </div>
+
+                        <!-- Admin Since input -->
+                        <div class="form-group row form-outline mb-4 pl-0">
+                            <label class="form-label d-block col-sm-3 px-0" for="addedOn">Admin Since</label>
+                            <div class="d-block col-sm-8">
+                                <input type="text" id="addedOn" class="form-control  text-secondary bg-light" formControlName="addedOn" readonly>
                             </div>
                         </div>
 

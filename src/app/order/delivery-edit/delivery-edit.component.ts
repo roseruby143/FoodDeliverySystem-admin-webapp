@@ -167,12 +167,8 @@ get deliveryStatus() {
         
         let resData = {...this.deliveryInfo, ...this.deliveryListForm.value};
 
-        let driver = this._deliveryStatus.filter(obj => {
-          return obj.id === this.deliveryListForm.value.driver
-        });
-        if(driver){
-          resData.driver = {id:driver[0].id};
-        }
+        resData.driver = {id:this.deliveryListForm.value.driver};
+        
           //this.deliveryListForm.value.driver.id = driver[0].id;
         
         //console.log(`-------- onFormSubmit() -> resData : ${JSON.stringify(resData)}`);

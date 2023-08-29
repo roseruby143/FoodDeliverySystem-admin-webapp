@@ -39,8 +39,8 @@
                                             <i *ngIf="modifiedBy == 'email' && booleanValue" class="fa fa-arrow-up"></i>
                                             <i *ngIf="modifiedBy == 'email' && !booleanValue" class="fa fa-arrow-down"></i>
                                         </th>
-                                        <th>Address</th>
-                                        <th>Phone</th>
+                                        <!-- <th>Address</th> -->
+                                        <th>Member Since</th>
                                         <th (click)="sort('status', booleanValue)">Status
                                             <i *ngIf="modifiedBy == 'status' && booleanValue" class="fa fa-arrow-up"></i>
                                             <i *ngIf="modifiedBy == 'status' && !booleanValue" class="fa fa-arrow-down"></i>
@@ -66,8 +66,8 @@
                                            <u>{{data.first_name}} {{data.last_name}}</u>
                                         </td>
                                         <td>{{data.email}}</td>
-                                        <td>{{data.street}}, {{data.city}}, {{data.state}}, {{data.country}} {{data.pincode}}</td>
-                                        <td>{{data.phone}}</td>
+                                        <!-- <td>{{data.street}}, {{data.city}}, {{data.state}}, {{data.country}} {{data.pincode}}</td> -->
+                                        <td>{{data.created_on | date}}</td>
 
                                         <td>
                                             <span *ngIf="data.status.toLocaleLowerCase() === 'active'" class="badge bg-success">{{data.status}}</span>

@@ -5,6 +5,7 @@ import { GenericValidator } from './../../shared/generic-validator';
 import { Subscription, Observable, fromEvent, merge, debounceTime } from 'rxjs';
 import { FormControlName, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'fds-profile-edit',
@@ -29,7 +30,7 @@ export class ProfileEditComponent implements OnInit {
   editAdmin:boolean = false;
   errorMessage:string='';
 
-  constructor(private _fb : FormBuilder, private _route: ActivatedRoute, private _profileService : ProfileService, private _router : Router ) { 
+  constructor(private _fb : FormBuilder, private _route: ActivatedRoute, private _profileService : ProfileService, private _router : Router, private _datePipe : DatePipe ) { 
     this._validationMessages = {
       fullName : {
         required : 'Please provide full name'
@@ -92,7 +93,8 @@ export class ProfileEditComponent implements OnInit {
       password : ['', Validators.required],
       fullName : ['', Validators.required],
       status : ['', Validators.required],
-      imgUrl : ['']
+      imgUrl : [''],
+      addedOn : ['', Validators.required]
     });
   }
 
@@ -116,14 +118,16 @@ export class ProfileEditComponent implements OnInit {
     }
     //this.title = `Admin Information : ${data.first_name} ${data.last_name}`;
     this.title = `Profile : ${data.fullName}`;
+    this.addProfileImage = data.imgUrl!;
     //console.log(data.imgUrl);
     this.adminListForm.patchValue({
       adminId : data.adminId!,
       email : data.email,
-      password : '',
+      password : data.password,
       fullName : data.fullName,
       status : data.status,
-      imgUrl : data.imgUrl
+      imgUrl : data.imgUrl,
+      addedOn : this._datePipe.transform(data.addedOn, 'MMM d,y')
     });
   }
 
@@ -131,8 +135,9 @@ export class ProfileEditComponent implements OnInit {
     if(this.adminListForm.valid){
       if(this.adminListForm.dirty){
 
-        console.log(JSON.stringify(this.adminListForm.value));
+        //console.log(JSON.stringify(this.adminListForm.value));
         let resData = {...this.adminInfo, ...this.adminListForm.value};
+        resData.addedOn = this.adminInfo?.addedOn;
         console.log(JSON.stringify(resData));
           //this.adminListForm.value.driver.id = driver[0].id;
         
@@ -144,10 +149,12 @@ export class ProfileEditComponent implements OnInit {
         } */
 
         this._profileService.editAdmin(resData).subscribe({ 
-          next : (data) => this.onFormSubmitComplete(data),
+          next : (data) => {
+            this.adminInfo = data
+            this.adminDisplay(data);
+            //this.onFormSubmitComplete(data)
+          },
           error : err => {
-            /* this.adminListForm.controls['email'].setErrors({'exists': true});
-            console.log(err); */
             this.errorMessage = err.error.message;
           }
         });
@@ -166,6 +173,6 @@ export class ProfileEditComponent implements OnInit {
   onFormSubmitComplete(data:any){
     //console.log(JSON.stringify(data));
     this.adminListForm.reset();
-    this._router.navigate(['/profile']);
+    this._router.navigate(['/admin',this.adminInfo?.adminId,'profile']);
   }
 }

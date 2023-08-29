@@ -27,7 +27,7 @@
                             <table class="table table-bordered table-hover " *ngIf="allRestaurants$ | async as rests">
                                 <thead class="table-light">
                                     <tr>
-                                        <th (click)="sort('id', $any($event.target))">ID 
+                                        <th (click)="sort('id', booleanValue)">ID 
                                             <i *ngIf="modifiedBy == 'id' && booleanValue" class="fa fa-arrow-up"></i>
                                             <i *ngIf="modifiedBy == 'id' && !booleanValue" class="fa fa-arrow-down"></i>
                                         </th>
@@ -54,6 +54,7 @@
                                               {{showImage ? "Hide" : "Show"}} Image
                                             </button>
                                         </th> -->
+                                        <th>Member Since</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -84,6 +85,7 @@
                                                 [style.width.px]="imageWidth"
                                                 [style.margin.px]="imageMargin">
                                         </td> -->
+                                        <td>{{data.added_on | date}}</td>
                                         <td class="d-flex justify-content-evenly">
                                             <a  role="button" (click)="openRestaurantAddEdit(data.id)" title="Edit"><i class="fa fa-edit custIconColor"></i></a>
                                             <a role="button" (click)="openDeleteRestaurantModal(deleteRestaurantModal,data)" title="Delete"><i class="fa fa-trash custIconColor"></i></a>

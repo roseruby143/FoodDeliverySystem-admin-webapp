@@ -55,12 +55,12 @@
                         </div>
 
                         <div class="form-group row mt-1 pl-0">
-                            <label class="col-sm-3 px-0" for ="taxCharges">Tax<sup
+                            <label class="col-sm-3 px-0" for ="taxNFees">Tax<sup
                                 class="text-danger">*</sup></label>
                             <div class="dropdown d-block col-sm-9 px-0">
-                                <input type="number" class="form-control col-sm" name="taxCharges" formControlName="taxCharges" [ngClass]="{'is-invalid': displayMessage['taxCharges']}">
+                                <input type="number" class="form-control col-sm" name="taxNFees" formControlName="taxNFees" [ngClass]="{'is-invalid': displayMessage['taxNFees']}">
                                 <span class="invalid-feedback">
-                                    {{displayMessage['taxCharges']}}
+                                    {{displayMessage['taxNFees']}}
                                 </span>
                             </div>
                         </div>
@@ -139,6 +139,13 @@
                         </div>
 
                         <div class="form-group row mt-2 pl-0">
+                            <label class="col-sm-3 px-0" for="instruction">Instruction</label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="text" id="instruction" class="form-control col" name="instruction" formControlName="instruction">
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2 pl-0">
                             <label class="col-sm-3 px-0" for="user">User<sup
                                 class="text-danger">*</sup></label>
                             <div class="dropdown d-block col-sm-9 px-0">
@@ -174,7 +181,7 @@
                             <a type="button" class="col-12 col-sm-4 col-xl-3 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/orders',orderInfo?.orderId,'orderitems']">
                                 View Order Items
                             </a>
-                            <a type="button" class="col-12 col-sm-4 col-xl-3 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/orders',orderInfo?.orderId,'deliveriy']"  *ngIf="orderInfo?.delivery">
+                            <a type="button" class="col-12 col-sm-4 col-xl-3 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/deliveries',orderInfo?.delivery?.id]"  *ngIf="orderInfo?.delivery">
                                 View Delivery
                             </a>
                             <a type="button" class="col-12 col-sm-4 col-xl-3 my-2 my-sm-0 btn btn-secondary disabled"  *ngIf="!orderInfo?.delivery">

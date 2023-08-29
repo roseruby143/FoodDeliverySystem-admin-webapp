@@ -21,12 +21,15 @@ export class RestaurantListComponent /* implements OnInit  */{
   
   private _errorMessageSubject = new Subject<string>();
   errorMessage$ = this._errorMessageSubject.asObservable();
+
+  allRestaurantList!:Restaurant[];
   
   allRestaurants$ = combineLatest([this._restService.restaurantWithCRUD$,this.filterRestNameAction$]).pipe(
     map(([restaurants, filterRestName]) => {
       return restaurants.filter(rest => 
         {
           //console.log(restaurants);
+          this.allRestaurantList = restaurants;
           return filterRestName ? rest.name.toLocaleLowerCase().includes(filterRestName.toLocaleLowerCase()) : true
         })
     }),
@@ -38,11 +41,6 @@ export class RestaurantListComponent /* implements OnInit  */{
     }),
     shareReplay(1)
   ); 
-
-  private _sortRestaurantSubject = new Subject<string>();
-  sortRestaurantActiopn$ = this._sortRestaurantSubject.asObservable();
-
-
 
   
   //filteredRestaurants$ = this.allRestaurants$;
@@ -61,7 +59,7 @@ export class RestaurantListComponent /* implements OnInit  */{
   /* ******** For Pagination ******* */
   page: number = 1;
   count: number = 0;
-  tableSize: number = 3;
+  tableSize: number = 7;
   //tableSizes: any = [3, 6, 9, 12];
 
   /* ********* For Sorting Table ********** */
@@ -138,7 +136,7 @@ export class RestaurantListComponent /* implements OnInit  */{
   }
 
   performFilter(filterBy: string) {
-    console.log(filterBy);
+    //console.log(filterBy);
     this._filterRestNameSubject.next(filterBy.toLocaleLowerCase());
 
     /* filterBy = filterBy.toLocaleLowerCase();
@@ -155,11 +153,9 @@ export class RestaurantListComponent /* implements OnInit  */{
     this.modifiedBy = colName;
     //console.log(`Sort col name is : ${colName}`)
     //const data = this.allRestaurants$ | async
-    console.log(JSON.stringify(this.allRestaurants$));
-    this.allRestaurants$.pipe(
-      map(data => data.sort(this._generalService.sortRes))
-    );
-    //this._generalService.sortObservable(this.allRestaurants$ ,colName,boolean);
+    console.log(JSON.stringify(this.allRestaurantList));
+    
+    this._generalService.sortObservable(this.allRestaurants$ ,colName,boolean);
     this.booleanValue = !this.booleanValue;
   }
 

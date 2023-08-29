@@ -1,7 +1,7 @@
 import { GeneralService } from './../../services/general.service';
 import { UserService } from './../../services/user.service';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { Router,RouterModule } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 import { User } from './../../model/user';
 import { Component, OnInit } from '@angular/core';
 
@@ -16,11 +16,6 @@ export class ViewUserComponent implements OnInit {
   filteredUsers : User[] = [];
   errorMessage:string = '';
   userInfo : User | undefined;
-  
-  /********** For image */
-/*   showImage = false;
-  imageWidth = 50;
-  imageMargin = 2; */
 
   /* ******** For Pagination ******* */
   page: number = 1;
@@ -117,7 +112,7 @@ export class ViewUserComponent implements OnInit {
     filterBy = filterBy.toLocaleLowerCase();
     //console.log(`filterBy : ${JSON.stringify(this.allUsers)}`);
     return this.allUsers.filter((data:User) => {
-      return data.email.toLocaleLowerCase().includes(filterBy)// !== -1
+      return data.email.toLocaleLowerCase().includes(filterBy) || data.first_name.toLocaleLowerCase().includes(filterBy) || data.last_name!.toLocaleLowerCase().includes(filterBy)// !== -1
     });
   }
 

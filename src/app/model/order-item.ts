@@ -4,6 +4,7 @@ export interface OrderItem {
     orderItemId : number,
     quantity : number,
     itemTotalPrice : number,
+    instruction : String,
     order : Order,
     dish : Dish
 }

@@ -1,8 +1,8 @@
 import { Admin } from './../model/admin';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +11,14 @@ export class LoginService {
 
   constructor(private _httpClient : HttpClient) { }
 
-  adminLogin(adminReq:any):Observable<Admin> {
-    return this._httpClient.post<Admin>(`${environment.baseUrl}/v1/admin/login`, adminReq);
+  private _headers = new HttpHeaders({'Content-Type' : 'application/json'});
+
+  adminLogin(adminReq:any):Observable<any> {
+    return this._httpClient.post<any>(`${environment.baseUrl}/v1/admin/login`, adminReq);
   }
 
   adminRegister(adminReq:Admin):Observable<any> {
-    return this._httpClient.post<any[]>(`${environment.baseUrl}/v1/admin`, adminReq);
+    return this._httpClient.post<Admin>(`${environment.baseUrl}/v1/admin`, adminReq);
   }
 
   userLogin(userReq:any):Observable<any> {
@@ -33,7 +35,8 @@ export class LoginService {
     return localStorage.getItem('user');
   }
   
-  logOut() {
-    localStorage.clear();
+  onLogOut(adminId:number) {
+    return this._httpClient.post<any>(`${environment.baseUrl}/v1/user/${adminId}/logout`,{id:adminId},{headers:this._headers})
+    .pipe(tap(data => console.log(`logout response : ${data}`)));
   }
 }

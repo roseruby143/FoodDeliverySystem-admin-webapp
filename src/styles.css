@@ -100,3 +100,9 @@ th{
     text-decoration: none;
     color: black;
 }
+
+input[readonly]
+{
+    color:gray;
+    pointer-events: none;
+}

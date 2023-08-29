@@ -1,0 +1,267 @@
+<div class="row">
+    <div class="col-12 col-md-1 "></div>
+    <div class="col mx-4 mx-md-0 card px-0 my-4 justify-content-center shadow rounded-0">
+        <div class="row border-secondary rounded-0">
+            <div class="card-header col-12 col-md-4 d-flex pt-5 pb-3 rounded-0">
+                <div class="" *ngIf="this.adminData; else newAdmin">
+                    <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title| titlecase}}</div>
+                    <img [src]=this.adminData.imgUrl  class="img-fluid rounded-circle mt-4 bg-white  w-75 mx-auto d-block" alt="" *ngIf="this.adminData?.imgUrl"/>
+                </div>
+            </div>
+            <div class="card-body col-12 col-md-8  px-5">
+                <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+                    
+                    <!-- <div class="my-5" style="width: 100%; height: 17px; border-bottom: 1px solid #d8363a; text-align: center">
+                        <span style="font-size: 20px; background-color: white; padding: 0 10px;">
+                            Information
+                        </span>
+                    </div> -->
+
+                    <!-- Register Success Message -->
+                   <!--  <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert" *ngIf="this.registerSuccess">
+                        <span><strong>Congratulations!</strong> Email registered successfully.</span>
+                        <a type="button" href="" class="custom-alert close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </a>
+                    </div> -->
+                    
+                    <!-- Id input -->
+                    <div *ngIf="this.adminData && (this.adminData?.adminId! > 0)" class="form-group row form-outline mt-5 mb-4">
+                        <label class="form-label d-block col-sm-4" for="adminId">Admin ID<sup
+                            class="text-danger">*</sup></label>
+                        <div class="d-block col-sm-8">
+                            <input type="text" id="adminId" class="form-control" formControlName="adminId" readonly>
+                        </div>
+                    </div>
+                    
+                    <!-- Name input -->
+                    <div class="form-group row form-outline mt-5 mb-4">
+                        <label class="form-label d-block col-sm-4" for="fullName">Full Name<sup
+                            class="text-danger">*</sup></label>
+                        <div class="d-block col-sm-8">
+                            <input type="text" id="fullName" class="form-control" formControlName="fullName" 
+                            [ngClass]="{'is-invalid': displayMessage['fullName']}"/>
+                            <span class="invalid-feedback">
+                                {{displayMessage['fullName']}}
+                            </span>
+                        </div>
+                    </div>
+            
+                    <div formGroupName="regEmail">
+                        <!-- Email input -->
+                        <div class="form-group row form-outline mb-4">
+                            <label class="form-label d-block col-sm-4" for="email">Email<sup
+                                class="text-danger">*</sup></label>
+                            <div class="d-block col-sm-8">
+                                <input type="email" id="email" class="form-control" formControlName="email" 
+                                [ngClass]="{'is-invalid': displayMessage['email']}" [readOnly]="this.adminData"/>
+                                <span class="invalid-feedback">
+                                    {{displayMessage['email']}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Email input -->
+                        <div *ngIf="!this.adminData" class="form-group row form-outline mb-4">
+                            <label class="form-label d-block col-sm-4" for="confirmEmail">Confirm Email<sup
+                                class="text-danger">*</sup></label>
+                            <div class="d-block col-sm-8">
+                                <input type="email" id="confirmEmail" class="form-control" formControlName="confirmEmail" 
+                                [ngClass]="{'is-invalid': displayMessage['confirmEmail']}"/>
+                                <span class="invalid-feedback">
+                                    {{displayMessage['confirmEmail']}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-group row form-outline mb-4">
+                        <label class="form-label d-block col-sm-4" for="password">Password<sup
+                            class="text-danger">*</sup></label>
+                        <div class=" d-block col-sm-8">
+                            <input type="password" id="password" class="form-control" formControlName="password" 
+                            [ngClass]="{'is-invalid': displayMessage['password']}"/>
+                            <span class="invalid-feedback">
+                                {{displayMessage['password']}}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Id input -->
+                    <div class="form-group row form-outline mb-4">
+                        <label class="form-label d-block col-sm-4" for="status">Status<sup class="text-danger">*</sup></label>
+                        <div class="dropdown d-block col-sm-8">
+                            <select class="btn btn-outline-secondary text-start" id="status" formControlName="status" [ngClass]="{'is-invalid': displayMessage['status']}">
+                                <option class="dropdown-item" id="choosestatus" [ngValue]="null" disabled>Choose a status</option>
+                                <option [id]="rest?.id" class="dropdown-item"  *ngFor="let rest of adminStatus" [ngValue]="rest.id">
+                                    {{rest?.status}}
+                                </option>
+                            </select>
+                            <span class="invalid-feedback">
+                                {{displayMessage['status']}}
+                            </span>
+                        </div> 
+
+                        <!-- <input type="text" id="status" class="form-control col" name="status" formControlName="status"> -->
+                    </div>
+                    
+                    <!-- Id input -->
+                    <div class="form-group row form-outline mt-5 mb-4">
+                        <label class="form-label d-block col-sm-4" for="imgUrl">Image URL</label>
+                        <div class="d-block col-sm-8">
+                            <input type="text" id="imgUrl" class="form-control" formControlName="imgUrl">
+                        </div>
+                    </div>
+                    
+                    <!-- Id input -->
+                    <div *ngIf="adminData && adminData.addedOn" class="form-group row form-outline mt-5 mb-4">
+                        <label class="form-label d-block col-sm-4" for="addedOn">Admin Since<sup
+                            class="text-danger">*</sup></label>
+                        <div class="d-block col-sm-8">
+                            <input type="text" id="addedOn" class="form-control" formControlName="addedOn" readonly>
+                        </div>
+                    </div>
+                    
+                    <!-- Address -->
+                    <!-- <div class="my-5" style="width: 100%; height: 17px; border-bottom: 1px solid #d8363a; text-align: center">
+                        <span style="font-size: 20px; background-color: white; padding: 0 10px;">
+                            Address
+                        </span>
+                    </div>
+
+                    <div class="form-group mt-4" formGroupName="address">
+                        <div class="form-group row form-outline mb-4">
+                            <label class="form-label d-block col-sm-4" for="street1">Address</label>
+                            <div class="d-block col-sm-8">
+                                <div class="mb-2">
+                                    <input placeholder="Street Address" type="text" id="street1" class="form-control" formControlName="street1" 
+                                    [ngClass]="{'is-invalid': (registerForm.get('street1')?.touched ||
+                                    registerForm.get('street1')?.dirty) &&
+                                    !registerForm.get('street1')?.valid}"/>
+                                    <span class="invalid-feedback">
+                                        <span *ngIf="registerForm.get('street1')?.errors?.['required']">
+                                            Please enter your phone
+                                        </span>
+                                    </span>
+                                </div>
+
+                                <div class="mb-2">
+                                    <input placeholder="Secondary Address" type="text" id="street2" class="form-control" formControlName="street2" 
+                                    [ngClass]="{'is-invalid': (registerForm.get('street2')?.touched ||
+                                    registerForm.get('street1')?.dirty) &&
+                                    !registerForm.get('street1')?.valid}"/>
+                                    <span class="invalid-feedback">
+                                        <span *ngIf="registerForm.get('street1')?.errors?.['required']">
+                                            Please enter your phone
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="d-block col-sm-6 mb-2 mb-md-0">
+                                        <input placeholder="City" type="text" id="city" class="form-control" formControlName="city" 
+                                        [ngClass]="{'is-invalid': (registerForm.get('city')?.touched ||
+                                        registerForm.get('street1')?.dirty) &&
+                                        !registerForm.get('street1')?.valid}"/>
+                                        <span class="invalid-feedback">
+                                            <span *ngIf="registerForm.get('street1')?.errors?.['required']">
+                                                Please enter your phone
+                                            </span>
+                                        </span>
+                                    </div>
+
+                                    <div class="d-block col-sm-6">
+                                        <input placeholder="Zip Code" type="text" id="zipCode" class="form-control" formControlName="zipCode" 
+                                        [ngClass]="{'is-invalid': (registerForm.get('zipCode')?.touched ||
+                                        registerForm.get('street1')?.dirty) &&
+                                        !registerForm.get('street1')?.valid}"/>
+                                        <span class="invalid-feedback">
+                                            <span *ngIf="registerForm.get('street1')?.errors?.['required']">
+                                                Please enter your phone
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="d-block col-sm-6 mb-2 mb-sm-0">
+                                        <input placeholder="State" type="text" id="state" class="form-control" formControlName="state" 
+                                        [ngClass]="{'is-invalid': (registerForm.get('city')?.touched ||
+                                        registerForm.get('street1')?.dirty) &&
+                                        !registerForm.get('street1')?.valid}"/>
+                                        <span class="invalid-feedback">
+                                            <span *ngIf="registerForm.get('street1')?.errors?.['required']">
+                                                Please enter your phone
+                                            </span>
+                                        </span>
+                                    </div>
+
+                                    <div class="d-block col-sm-6">
+                                        <input placeholder="Country" type="text" id="country" class="form-control" formControlName="country" 
+                                        [ngClass]="{'is-invalid': (registerForm.get('city')?.touched ||
+                                        registerForm.get('street1')?.dirty) &&
+                                        !registerForm.get('street1')?.valid}"/>
+                                        <span class="invalid-feedback">
+                                            <span *ngIf="registerForm.get('street1')?.errors?.['required']">
+                                                Please enter your phone
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> -->
+
+                    <!-- Error Message -->
+                    <div class="form-group row form-outline mb-4 mt-4 text-center" *ngIf="this.errRegisterMessage">
+                        <div class="d-block col">
+                            <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+                                <i class="fa fa-exclamation-triangle"></i>
+                                <div>
+                                    &nbsp;&nbsp;{{ this.errRegisterMessage }}
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit button -->
+                    <div class="row d-flex justify-content-sm-around mt-4">
+                        <button type="submit" [disabled]="!registerForm.valid"  class="col-12 col-sm-3 col-md-3 btn btn-secondary">
+                            <span *ngIf="!this.adminData">Register</span><span *ngIf="this.adminData">Update</span>
+                        </button>
+                        <a  *ngIf="this.adminData" type="button" class="col-12 col-sm-3 col-md-3 my-2 my-sm-0 btn btn-secondary" (click)="openDeactivateAdminModal(changeAdminStatusModal)" >
+                            <span *ngIf="this.adminData.status.toLocaleLowerCase() == 'active'" >Deactivate</span> 
+                            <span *ngIf="this.adminData.status.toLocaleLowerCase() == 'inactive'" >Activate</span> 
+                        </a>
+                        <a type="button" class="col-12 col-sm-3 col-md-3 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/view/admins']">
+                            View Admins
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-1"></div>
+    <ng-template #newAdmin>
+        <div class=" ">
+            <div class="h2 mt-4 text-center" id="exampleModalLabel">Add New Admin</div>
+            <img [src]=this.addAdminImage  class="img-fluid rounded-circle mt-3 bg-white  w-75 mx-auto d-block" alt=""/>
+        </div>
+    </ng-template>
+</div>
+
+<ng-template #changeAdminStatusModal let-modal>
+	<div class="modal-header ">
+		<h4 class="modal-title" id="modal-basic-title"><span *ngIf="this.adminData?.status?.toLocaleLowerCase() == 'active'">Deactivate</span><span *ngIf="this.adminData?.status!.toLocaleLowerCase() == 'inactive'">Activate</span> Admin</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<div class="my-2 d-flex  flex-column align-items-center">
+            <p class="font-weight-bold"><strong>Confirm if you want to change the Admin status for <u>{{adminData?.fullName}}</u></strong>?</p> 
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn  me-1" (click)="changeAdminStatus()"><span *ngIf="this.adminData?.status?.toLocaleLowerCase() == 'active'">Deactivate</span><span *ngIf="this.adminData?.status!.toLocaleLowerCase() == 'inactive'">Activate</span> Admin</button>
+	</div>
+</ng-template>

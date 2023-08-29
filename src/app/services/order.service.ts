@@ -35,7 +35,7 @@ export class OrderService {
     if(action === 'update')
       return this._httpClient.put<Order>(`${environment.baseUrl}/v1/orders/${orderData.orderId}`,orderData,{headers:this.headers});
     else
-      return this._httpClient.post<Order>(`${environment.baseUrl}/v1/user/${orderData.user.id}/orders`,orderData,{headers:this.headers});
+      return this._httpClient.post<Order>(`${environment.baseUrl}/v1/user/${orderData.user!.id}/orders`,orderData,{headers:this.headers});
   }
 
   /* Get All Deliverys*/
@@ -79,11 +79,11 @@ export class OrderService {
   }
 
   /* Add new Delivery or Edit OrderItem with Id */
-  addEditOrderItems(data:OrderItem,action:string):Observable<OrderItem>{
-    if(action === 'update')
-      return this._httpClient.put<OrderItem>(`${environment.baseUrl}/v1/orderitems/${data.orderItemId}`,data,{headers:this.headers});
-    else
-      return this._httpClient.post<OrderItem>(`${environment.baseUrl}/v1/orders/${data.order.orderId}/orderitems`,data,{headers:this.headers});
+  editOrderItems(data:OrderItem):Observable<OrderItem>{
+    return this._httpClient.put<OrderItem>(`${environment.baseUrl}/v1/orderitems/${data.orderItemId}`,data,{headers:this.headers});
+  }
+  newOrderItems(data : OrderItem[]):Observable<OrderItem[]>{
+    return this._httpClient.post<OrderItem[]>(`${environment.baseUrl}/v1/orders/${data[0].order.orderId}/orderitems`,data,{headers:this.headers});
   }
 
   

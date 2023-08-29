@@ -38,10 +38,10 @@ export class OrderEditComponent implements OnInit {
 
   private _orderStatus = [
     {id : 1, status : 'Order Created'},
-    {id : 2, status : 'Order Accepted by Restaurant'},
-    {id : 3, status : 'Order Ready For Pickup'},
-    {id : 4, status : 'Order Delivered'},
-    {id : 99, status : 'Order Cancelled'}
+    {id : 2, status : 'Accepted By Restaurant'},
+    {id : 3, status : 'Picked up by Driver'},
+    {id : 4, status : 'Completed'},
+    {id : 99, status : 'Cancelled'}
   ];
   get orderStatus() {
       return this._orderStatus;
@@ -58,10 +58,11 @@ export class OrderEditComponent implements OnInit {
   }
   
   private _paymentMethod = [
-    {id : 1, method : 'Debit/Credit Card'},
-    {id : 2, method : 'Paypal'},
+    {id : 1, method : 'Credit/Debit'},
+    {id : 2, method : 'Paypal'}
+    /* ,
     {id : 3, method : 'Venmo'},
-    {id : 4, method : 'Google/Apple Pay'},
+    {id : 4, method : 'Google/Apple Pay'}, */
   ];
   get paymentMethod() {
       return this._paymentMethod;
@@ -78,7 +79,7 @@ export class OrderEditComponent implements OnInit {
       itemsSubTotal : {
         required : 'Please provide the items sub total'
       },
-      taxCharges : {
+      taxNFees : {
         required : 'Please provide the total tax amount'
       },
       deliveryCharges : {
@@ -139,7 +140,7 @@ export class OrderEditComponent implements OnInit {
       orderStatus : ['', Validators.required],
       totalItems : ['', Validators.required],
       itemsSubTotal : ['', Validators.required],
-      taxCharges : ['', Validators.required],
+      taxNFees : ['', Validators.required],
       deliveryCharges: ['', Validators.required],
       driverTip: ['', Validators.required],
       totalAmount: ['', Validators.required],
@@ -147,6 +148,7 @@ export class OrderEditComponent implements OnInit {
       paymentStatusTitle: [''],
       paymentMethod: [''],
       paymentMethodTitle: [''],
+      instruction : [''],
       user: ['', Validators.required],
       delivery: ['']
     });
@@ -176,19 +178,20 @@ export class OrderEditComponent implements OnInit {
     //console.log(data.imgUrl);
     this.orderListForm.patchValue({
       id : data.orderId!,
-      orderDate : new Date(data.orderDate),
+      orderDate : new Date(data.orderDate!),
       orderStatus : data.orderStatus,
       totalItems : data.totalItems,
-      itemsSubTotal : data.itemsSubTotal,
-      taxCharges : data.taxCharges,
-      deliveryCharges: data.deliveryCharges,
-      driverTip: data.driverTip,
-      totalAmount: data.totalAmount,
+      itemsSubTotal : data.itemsSubTotal!.toFixed(2),
+      taxNFees : data.taxNFees!.toFixed(2),
+      deliveryCharges: data.deliveryCharges!.toFixed(2),
+      driverTip: data.driverTip!.toFixed(2),
+      totalAmount: data.totalAmount!.toFixed(2),
       paymentStatus: data.paymentStatus,
       paymentStatusTitle: data.paymentStatusTitle,
       paymentMethod: data.paymentMethod,
       paymentMethodTitle: data.paymentMethodTitle,
-      user: data.user.id,
+      instruction: data.instruction,
+      user: data.user!.id,
       delivery: data.delivery?.id
     });
   }
@@ -213,7 +216,7 @@ export class OrderEditComponent implements OnInit {
     if(this.orderListForm.valid){
       if(this.orderListForm.dirty){
 
-        console.log(JSON.stringify(this.orderListForm.value));
+        //console.log(JSON.stringify(this.orderListForm.value));
         //this.orderListForm.value
         /* if(this.orderListForm.value.orderStatus == 3){
           this.orderListForm.value.OrderDate = new Date();
@@ -223,7 +226,7 @@ export class OrderEditComponent implements OnInit {
         this.orderListForm.value.orderDate = new Date(); 
         
         let resData = {...this.orderInfo, ...this.orderListForm.value};
-        console.log(JSON.stringify(resData));
+        //console.log(JSON.stringify(resData));
         
         resData.paymentStatusTitle = this._paymentStatus.filter(obj => {
           return obj.id === this.orderListForm.value.paymentStatus

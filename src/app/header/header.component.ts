@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { Subscription, Subject, takeUntil } from 'rxjs';
 import { Admin } from './../model/admin';
 import { ProfileService } from './../services/profile.service';
 import { LoginService } from './../services/login.service';
@@ -17,21 +17,30 @@ export class HeaderComponent implements OnInit {
   errorMessage:string = '';
 
   navBarList! : any;
-  adminId! : number;
+
+  private _destroy$ = new Subject<void>();
 
   private _sub! : Subscription | null;
    
-  constructor(public loginServiceObj:LoginService, private _router:Router, private _adminService : ProfileService) { 
+  constructor(private _loginService:LoginService, private _router:Router) { 
+    //this.adminId = 0;
     this.navBarList = [
       {
-        'navLis' : 'User Management',
+        'navLis' : 'Users',
         'navListDropdown' : [
             {'listName':'View User','listValue':'/users'},
             {'listName':'Add User','listValue':'/users/0/edit'}
         ]
+      },
+      {
+        'navLis' : 'Admins',
+        'navListDropdown' : [
+            {'listName':'View Admin','listValue':'/view/admins'},
+            {'listName':'Add Admin','listValue':'/add/admin'}
+        ]
       }, 
       {
-        'navLis':'Order Management',
+        'navLis':'Orders',
         'navListDropdown':[
             {'listName':'View Orders','listValue':'/orders'},
             {'listName':'Add Orders','listValue':'/orders/0/edit'},
@@ -42,7 +51,7 @@ export class HeaderComponent implements OnInit {
         ]
       },
       {
-        'navLis' : 'Restaurant Management',
+        'navLis' : 'Restaurants',
         'navListDropdown' : [
             {'listName':'View Restaurants','listValue':'/restaurants'},
             {'listName':'Add Restaurants','listValue':'/restaurants/0/edit'},
@@ -51,7 +60,7 @@ export class HeaderComponent implements OnInit {
         ]
       },
       {
-        'navLis':'Driver Management',
+        'navLis':'Drivers',
         'navListDropdown':[
             {'listName':'View Drivers','listValue':'/drivers'},
             {'listName':'Add Drivers','listValue':'/drivers/0/edit'}
@@ -60,22 +69,17 @@ export class HeaderComponent implements OnInit {
     ];
   }
 
-  //userNameDisplayed:string = this.loginServiceObj.loginUser;
-  //baseUrl:string = window.location.pathname;
-  isUserLoggedIn = false;
-
   get status(): boolean {
     return localStorage.getItem('status') ? true : false;
 }
 
   ngOnInit(): void {
-    this.isUserLoggedIn = localStorage.getItem('status')==='loggedIn'?true:false;
-    //console.log(JSON.parse(localStorage.getItem('loggedInAdminData')!));
-    this.adminId = 7;
   }
 
   ngOnDestroy() : void{
     this._sub!.unsubscribe();
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   get companyName():string{
@@ -83,9 +87,32 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout(){
+
+    this._loginService.onLogOut(+localStorage.getItem('userId')!).subscribe({
+      next : (data) => {
+        console.log(`logout data is: ${data}`);
+        localStorage.clear();
+        //this.isUserLoggedIn = false;
+        this._router.navigate(['/login']);
+      },
+      error : err => {
+        console.log(`Error while logging out : ${err}`);
+      }
+    });
+
     localStorage.clear();
-    this.isUserLoggedIn = false;
+    //this.isUserLoggedIn = false;
     this._router.navigate(['/login']);
   }
+
+  editProfile(){
+    //console.log('/admin',this.adminId,'profile');
+    this._router.navigate(['/admin',localStorage.getItem('adminId'),'profile']);
+  }
+
+  addAdmin(){
+    this._router.navigate(['/admin','add','admin']);
+  }
+
 
 }

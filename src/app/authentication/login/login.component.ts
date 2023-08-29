@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AbstractControl, FormBuilder, FormControl, FormControlName, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { debounceTime, Subscription, Observable, fromEvent, merge } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
 
 function emailMatcher(c : AbstractControl) : ValidationErrors | null {
   const emailControl = c.get('regEmail');
@@ -125,11 +126,10 @@ export class LoginComponent implements OnInit {
       "password" : this.loginForm.value.password
     };
 
-    this._authService.adminLogin(adminDataLogin)
-      .subscribe({ 
+    this._authService.adminLogin(adminDataLogin).subscribe({ 
         next : (response:Admin) => { 
           if(response.adminId != null) {
-            localStorage.setItem('loggedInAdminData', response.toString());
+            localStorage.setItem('adminId', response.adminId.toLocaleString());
             localStorage.setItem('user', response.email);
             localStorage.setItem('status', 'loggedIn');
             this._router.navigateByUrl('/restaurants');
@@ -186,7 +186,7 @@ export class LoginComponent implements OnInit {
     this._forgotPasswordModal.dismissAll(modelRef);
   }
 
-  getAdminByEmail(email:string){
+  /* getAdminByEmail(email:string){
     this._adminService.getAdminByEmail(email).subscribe({
       next : data => {
         //console.log(`********* Admin data is : ${JSON.stringify(data)}`);
@@ -196,7 +196,7 @@ export class LoginComponent implements OnInit {
         this.errLoginMessage = err.error.message;
       }
     });
-  }
+  } */
 
 }
 

@@ -34,6 +34,19 @@
                                 </span>
                             </div>
                         </div>
+                        
+                        <!-- Password input -->
+                        <div class="form-group row mt-2 pl-0">
+                            <label class="form-label d-block col-sm-3 px-0" for="password">Password<sup
+                                class="text-danger">*</sup></label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="password" id="password" class="form-control" formControlName="password" 
+                                [ngClass]="{'is-invalid': displayMessage['password']}"/>
+                                <span class="invalid-feedback">
+                                    {{displayMessage['password']}}
+                                </span>
+                            </div>
+                        </div>
 
                         <div class="form-group row mt-2 pl-0">
                             <label class="col-sm-3 px-0" for="first_name">First Name<sup
@@ -53,40 +66,62 @@
                             </div>
                         </div>
 
-                        <div class="form-group row form-outline mt-2 mb-4">
-                            <label class="form-label d-block col-sm-3 px-0" for="street">Address</label>
+                        <div class="form-group row mt-2 pl-0" *ngIf="this.userInfo">
+                            <label class="col-sm-3 px-0" for="created_on">User Since</label>
+                            <div class="d-block col-sm-9 px-0">
+                                <input type="text" id="created_on" class="form-control col  text-secondary bg-light" name="created_on" formControlName="created_on" readonly>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group row form-outline mt-2 mb-4">
+                            <label class="form-label d-block col-sm-3 px-0" for="street">Address<sup class="text-danger">*</sup></label>
                             <div class="d-block col-sm-9 px-0">
                                 <div class="mb-2">
-                                    <input placeholder="Street Address" type="text" id="street" class="form-control" formControlName="street">
+                                    <input placeholder="Street Address" type="text" id="street" class="form-control" formControlName="street" [ngClass]="{'is-invalid': displayMessage['street']}">
+                                    <span class="invalid-feedback">
+                                        {{displayMessage['street']}}
+                                    </span>
                                 </div>
                                 <div class="row mb-2">
                                     <div class="d-block col-sm-6 mb-2 mb-md-0">
-                                        <input placeholder="City" type="text" id="city" class="form-control" formControlName="city">
+                                        <input placeholder="City" type="text" id="city" class="form-control" formControlName="city" [ngClass]="{'is-invalid': displayMessage['city']}">
+                                        <span class="invalid-feedback">
+                                            {{displayMessage['city']}}
+                                        </span>
                                     </div>
                                     <div class="d-block col-sm-6 mb-2 mb-sm-0">
-                                        <input placeholder="State" type="text" id="state" class="form-control" formControlName="state">
+                                        <input placeholder="State" type="text" id="state" class="form-control" formControlName="state" [ngClass]="{'is-invalid': displayMessage['state']}">
+                                        <span class="invalid-feedback">
+                                            {{displayMessage['state']}}
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
                                     <div class="d-block col-sm-6">
-                                        <input placeholder="Country" type="text" id="country" class="form-control" formControlName="country">
+                                        <input placeholder="Country" type="text" id="country" class="form-control" formControlName="country" [ngClass]="{'is-invalid': displayMessage['country']}">
+                                        <span class="invalid-feedback">
+                                            {{displayMessage['country']}}
+                                        </span>
                                     </div>
                                     <div class="d-block col-sm-6">
-                                        <input placeholder="Zip Code" type="number" id="pincode" class="form-control" formControlName="pincode">
+                                        <input placeholder="Zip Code" type="number" id="pincode" class="form-control" formControlName="pincode" [ngClass]="{'is-invalid': displayMessage['pincode']}">
+                                        <span class="invalid-feedback">
+                                            {{displayMessage['pincode']}}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row mt-2 pl-0">
-                            <label class="col-sm-3 px-0" for="UserPhone">Phone</label>
+                            <label class="col-sm-3 px-0" for="UserPhone">Phone<sup class="text-danger">*</sup></label>
                             <div class="d-block col-sm-9 px-0">
                                 <input type="tel" id="UserPhone" class="form-control col" name="UserPhone" formControlName="phone" [ngClass]="{'is-invalid': displayMessage['phone']}">
                                 <span class="invalid-feedback">
                                     {{displayMessage['phone']}}
                                 </span>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!--  Account Information -->
                         <div class="my-5 custom-hr">
@@ -100,12 +135,12 @@
                             <div class="dropdown d-block col-sm-9 px-0">
                                 <select class="btn btn-outline-secondary text-start" id="status" formControlName="status" [ngClass]="{'is-invalid': displayMessage['status']}">
                                     <option class="dropdown-item" id="choosestatus" [ngValue]="null" disabled>Choose a status</option>
-                                    <option [id]="rest?.id" class="dropdown-item"  *ngFor="let rest of userStatus" [ngValue]="rest.id">
+                                    <option [id]="rest?.id" class="dropdown-item"  *ngFor="let rest of userStatus; let i = index;" [ngValue]="rest.id">
                                         {{rest?.status}}
                                     </option>
                                 </select>
                                 <span class="invalid-feedback">
-                                    {{displayMessage['user']}}
+                                    {{displayMessage['status']}}
                                 </span>
                             </div> 
 

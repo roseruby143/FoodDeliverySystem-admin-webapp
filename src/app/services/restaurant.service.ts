@@ -145,17 +145,16 @@ export class RestaurantService {
   } */
 
   /* Get Restaurants by Id*/
-  /* getRestaurantData(restId:number):Observable<Restaurant> {
+  getRestaurantData(restId:number):Observable<Restaurant> {
     return this._httpClient.get<Restaurant>(`${environment.baseUrl}/v1/restaurant/${restId}`,{headers:this.headers});
-  } */
+  }
 
   /* Add new Restaurant or Edit Restaurants with Id */
-  /* addEditRestaurant(restData:Restaurant,action:string):void{
+  addEditRestaurant(restData:Restaurant,action:string):void{
     console.log(`Inside addRestaurant of Restaurant Servive : ${JSON.stringify(restData)}`)
-    let newRes:Restaurant;
     if(action === 'update')
-      this._httpClient.put<Restaurant>(`${environment.baseUrl}/v1/restaurant/${restData.id}`,restData,{headers:this.headers}).subscribe(
-        {next : data => {
+      this._httpClient.put<Restaurant>(`${environment.baseUrl}/v1/restaurant/${restData.id}`,restData,{headers:this.headers}).subscribe({
+          next : data => {
           console.log(`Update : ${JSON.stringify(data)}`);
           //this.restaurantInsertSubject.next(data);
         },
@@ -164,22 +163,22 @@ export class RestaurantService {
         }
       });
     else
-      this.addNewRestaurant(restData); */
-      /* this._httpClient.post<Restaurant>(`${environment.baseUrl}/v1/restaurant`,restData,{headers:this.headers}).subscribe({
+      //this.addNewRestaurant(restData);
+      this._httpClient.post<Restaurant>(`${environment.baseUrl}/v1/restaurant`,restData,{headers:this.headers}).subscribe({
         next : data => {
           console.log(`Add : ${JSON.stringify(data)}`);
-          this.restaurantInsertSubject.next(data);
+          //this.restaurantInsertSubject.next(data);
         },
         error : err => {
           console.log(err);
         }
-      }); */
-  //}
+      });
+  }
 
   /* Delete Restaurants by id*/
-  /* deleteRestaurant(id:number):Observable<Restaurant>{
+  deleteRestaurantById(id:Restaurant):Observable<Restaurant>{
     return this._httpClient.delete<Restaurant>(`${environment.baseUrl}/v1/restaurant/${id}`,{headers:this.headers});
-  } */
+  }
 
   /************************************** Dishes CRUD Operations *******************************/
   /* Get All Dishes*/

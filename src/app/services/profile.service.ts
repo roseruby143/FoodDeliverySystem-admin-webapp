@@ -13,6 +13,10 @@ export class ProfileService {
 
   private _headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
+  getAllAdmins():Observable<Admin[]> {
+    return this._httpClient.get<Admin[]>(`${environment.baseUrl}/v1/admin`, {headers : this._headers});
+  }
+  
   getAdminById(adminId:number):Observable<Admin> {
     return this._httpClient.get<Admin>(`${environment.baseUrl}/v1/admin/${adminId}`, {headers : this._headers});
   }
@@ -21,8 +25,13 @@ export class ProfileService {
     return this._httpClient.get<Admin>(`${environment.baseUrl}/v1/admin/${email}`, {headers : this._headers});
   }
 
+  /* Add New Admin*/
+  addAdmin(data:Admin):Observable<Admin>{
+    return this._httpClient.post<Admin>(`${environment.baseUrl}/v1/admin`,data,{headers:this._headers});
+  }
+
   /* Edit Admin with Id */
   editAdmin(data:Admin):Observable<Admin>{
-    return this._httpClient.put<Admin>(`${environment.baseUrl}/v1/admin`,data,{headers:this._headers});
+    return this._httpClient.put<Admin>(`${environment.baseUrl}/v1/admin/${data.adminId}`,data,{headers:this._headers});
   }
 }

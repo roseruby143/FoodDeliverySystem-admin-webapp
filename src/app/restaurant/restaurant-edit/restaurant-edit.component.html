@@ -3,8 +3,8 @@
     <div class="col mx-4 mx-md-0 card px-0 my-4 justify-content-center shadow rounded-0">
         <div class="row border-secondary rounded-0">
             <div class="card-header col-12 col-md-4 d-flex pt-5 pb-3 rounded-0">
-                <div class="" *ngIf="this.restaurantInfo$ | async as restaurantInfo; else newRestaurant">
-                    <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title$ | async | titlecase}}</div>
+                <div class="" *ngIf="this.restaurantInfo ; else newRestaurant">
+                    <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title$ | titlecase}}</div>
                     <img [src]=this.restaurantInfo.restaurantImageUrl  class="img-fluid rounded-circle mt-3" alt="" *ngIf="this.restaurantInfo?.restaurantImageUrl"/>
                 </div>
             </div>
@@ -12,7 +12,7 @@
             <div class="card-body col-12 col-md-8 px-5">
                 <form [formGroup]="restaurantListForm" (ngSubmit)="onFormSubmit()">
                     <div class="pt-0">
-                        <div class="form-group row mt-1 pl-0" *ngIf="this.restaurantInfo$ | async">
+                        <div class="form-group row mt-1 pl-0" *ngIf="this.restaurantInfo">
                             <label class="col-sm-3 px-0" for ="restaurantId">Restaurant ID<sup
                                 class="text-danger">*</sup></label>
                             <input type="number" class="form-control col-sm text-secondary bg-light" name="restaurantId" formControlName="id" readonly>
@@ -111,17 +111,17 @@
                             <button type="submit" id="editRestaurantButton" class="col-12 col-sm-3 col-xl-3 btn btn-secondary " [disabled]="!restaurantListForm.valid">
                                 Save
                             </button>
-                            <a type="button" class="col-12 col-sm-3 col-xl-3 my-2 my-sm-0 btn btn-secondary" (click)="openDeleteRestaurantModal(deleteRestaurantModal)" *ngIf="(restaurantInfo$ | async) && restaurantListForm.valid">
+                            <a type="button" class="col-12 col-sm-3 col-xl-3 my-2 my-sm-0 btn btn-secondary" (click)="openDeleteRestaurantModal(deleteRestaurantModal)" *ngIf="(this.restaurantInfo) && restaurantListForm.valid">
                                 Delete
                             </a>
-                            <a type="button" class="col-12 col-sm-3 col-xl-3 my-2 my-sm-0 btn btn-secondary disabled"  *ngIf="(restaurantInfo$ | async) && !restaurantListForm.valid">
+                            <a type="button" class="col-12 col-sm-3 col-xl-3 my-2 my-sm-0 btn btn-secondary disabled"  *ngIf="this.restaurantInfo && !restaurantListForm.valid">
                                 Delete
                             </a>
 
-                            <a type="button" id="dishesRestaurantButton" class="col-12 col-sm-3 col-xl-3 btn btn-secondary" (click)="goToDishes()" *ngIf="(restaurantInfo$ | async) && restaurantListForm.valid">
+                            <a type="button" id="dishesRestaurantButton" class="col-12 col-sm-3 col-xl-3 btn btn-secondary" (click)="goToDishes()" *ngIf="this.restaurantInfo && restaurantListForm.valid">
                                 View Dishes
                             </a>
-                            <a type="button" id="dishesRestaurantButton" class="col-12 col-sm-3 col-xl-3 btn btn-secondary disabled" *ngIf="(restaurantInfo$ | async) && !restaurantListForm.valid">
+                            <a type="button" id="dishesRestaurantButton" class="col-12 col-sm-3 col-xl-3 btn btn-secondary disabled" *ngIf="this.restaurantInfo && !restaurantListForm.valid">
                                 View Dishes
                             </a>
                         </div>

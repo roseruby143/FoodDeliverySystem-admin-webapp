@@ -20,6 +20,7 @@ import { ProfileEditComponent } from './profile-edit/profile-edit.component';
       {path:'admin/:id/profile', component:ProfileEditComponent, canActivate:[AuthenticationGuard]},
       {path:'admin/:id/edit', component:ProfileEditComponent, canActivate:[AuthenticationGuard]}
     ])
-  ]
+  ],
+  providers: []
 })
 export class ProfileModule { }

@@ -94,6 +94,7 @@ export class OrderItemEditComponent implements OnInit {
       orderItemId : [0],
       quantity : [0 ,Validators.required],
       itemTotalPrice : [0, Validators.required],
+      instruction : [''],
       order : ['', Validators.required],
       dish : ['', Validators.required]
     });
@@ -125,6 +126,7 @@ export class OrderItemEditComponent implements OnInit {
       orderItemId : data.orderItemId!,
       quantity : data.quantity,
       itemTotalPrice : data.itemTotalPrice,
+      instruction : data.instruction,
       dish : data.dish.dishId,
       order : data.order.orderId
     });
@@ -146,31 +148,37 @@ export class OrderItemEditComponent implements OnInit {
     if(this.orderItemListForm.valid){
       if(this.orderItemListForm.dirty){
 
-        console.log(JSON.stringify(this.orderItemListForm.value));
+        //console.log(`orderItemInfo : ${JSON.stringify(this.orderItemInfo)}`);
 
         this.orderItemListForm.value.dish = {dishId:this.orderItemListForm.value.dish};
         this.orderItemListForm.value.order = {orderId:this.orderItemListForm.value.order};
         //this.orderItemListForm.value.orderDate = new Date(); 
         
         let resData = {...this.orderItemInfo, ...this.orderItemListForm.value};
-        console.log(JSON.stringify(resData));
+        //console.log(`resData : ${JSON.stringify(resData)}`);
           //this.orderItemListForm.value.driver.id = driver[0].id;
         
         //console.log(`-------- onFormSubmit() -> resData : ${JSON.stringify(resData)}`);
-        let action:string = 'update';
         if(!this.orderItemListForm.value.id || this.orderItemListForm.value.id < 1){
-          action = 'add';
           delete this.orderItemListForm.value.orderItemId;
+          let newData = [];
+          newData.push(resData);
+          this._orderItemService.newOrderItems(newData).subscribe({ 
+            next : (data) => this.onFormSubmitComplete(data),
+            error : err => {
+              this.errorMessage = err.error.message;
+            }
+          });
+        }else{
+          this._orderItemService.editOrderItems(resData).subscribe({ 
+            next : (data) => this.onFormSubmitComplete(data),
+            error : err => {
+              this.errorMessage = err.error.message;
+            }
+          });
         }
 
-        this._orderItemService.addEditOrderItems(resData,action).subscribe({ 
-          next : (data) => this.onFormSubmitComplete(data),
-          error : err => {
-            /* this.orderItemListForm.controls['email'].setErrors({'exists': true});
-            console.log(err); */
-            this.errorMessage = err.error.message;
-          }
-        });
+        
       }else{
         this.onFormSubmitComplete('Nothing has been updated');
       }
@@ -190,15 +198,15 @@ export class OrderItemEditComponent implements OnInit {
   }
 
   updateItemTotalPrice(){
-    console.log(this.orderItemListForm.value.dish);
+    //console.log(this.orderItemListForm.value.dish);
     if(this.orderItemListForm.value.dish && this.orderItemListForm.value.quantity)
     {
       let dish = this.allDishes.filter((d) => d.dishId == this.orderItemListForm.value.dish);
-      console.log(JSON.stringify(dish));
+      //console.log(JSON.stringify(dish));
       this.orderItemListForm.patchValue({
         itemTotalPrice : this.orderItemListForm.value.quantity * dish[0].price
       });
-      console.log(this.orderItemListForm.value.itemTotalPrice);
+      //console.log(this.orderItemListForm.value.itemTotalPrice);
     }
   }
 }

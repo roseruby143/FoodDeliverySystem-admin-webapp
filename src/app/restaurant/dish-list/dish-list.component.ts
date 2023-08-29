@@ -44,7 +44,7 @@ export class DishListComponent implements OnInit {
   /* ******** For Pagination ******* */
   page: number = 1;
   count: number = 0;
-  tableSize: number = 3;
+  tableSize: number = 7;
   //tableSizes: any = [3, 6, 9, 12];
 
   /****** Deleting Dish Data *******/
@@ -82,7 +82,7 @@ export class DishListComponent implements OnInit {
     //console.log(`Start fetching dishes data for restaurant id: ${restId}`);
     this._restService.getDishesByRestaurantId(restId).subscribe({
       next: dishes => {
-        //console.log(`Dishes data fetched from backend for restaurant Id : \n${restId} : ${JSON.stringify(dishes)}`);
+        console.log(`Dishes data fetched from backend for restaurant Id : \n${restId} : ${JSON.stringify(dishes)}`);
         this.allDishes = dishes;
         this.filteredDishes = this.allDishes;
         this.restaurantName = dishes[0].restaurant.name;
@@ -98,7 +98,7 @@ export class DishListComponent implements OnInit {
     //console.log(`Start fetching all dishes.`);
     this._restService.getAllDishes().subscribe({
       next: dishes => {
-        //console.log(`All Dishes data fetched from backend : ${JSON.stringify(dishes)}`);
+        console.log(`All Dishes data fetched from backend : ${JSON.stringify(dishes)}`);
         this.allDishes = dishes;
         this.filteredDishes = this.allDishes;
       },

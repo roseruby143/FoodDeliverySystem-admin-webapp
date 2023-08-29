@@ -22,7 +22,7 @@ export class OrderViewComponent implements OnInit {
   /* ******** For Pagination ******* */
   page: number = 1;
   count: number = 0;
-  tableSize: number = 3;
+  tableSize: number = 7;
   //tableSizes: any = [3, 6, 9, 12];
 
   /* ********* For Sorting Table ********** */
@@ -104,7 +104,7 @@ export class OrderViewComponent implements OnInit {
     filterBy = filterBy.toLocaleLowerCase();
     //console.log(`filterBy : ${JSON.stringify(this.allOrder)}`);
     return this.allOrder.filter((data:Order) => {
-      return data.user.first_name?.toLocaleLowerCase().includes(filterBy) || data.orderId == Number(filterBy)// !== -1
+      return data.user!.first_name?.toLocaleLowerCase().includes(filterBy) || data.user!.last_name?.toLocaleLowerCase().includes(filterBy) || data.orderId?.toLocaleString().includes(filterBy)// !== -1
     });
   }
 

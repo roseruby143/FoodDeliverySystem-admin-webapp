@@ -27,15 +27,14 @@ export class RestaurantEditComponent implements OnInit {
   private _errorMessageSubject = new Subject<string>();
   errorMessage$ = this._errorMessageSubject.asObservable();
 
-  restaurantInfo$ = this._resService.selectedRestaurantData$.pipe(
+  restaurantInfo!:Restaurant;
+  /* $ = this._resService.selectedRestaurantData$.pipe(
     catchError(err => {
       this._errorMessageSubject.next(err.message);
       return EMPTY;
     })
-  );
-  title$ = this.restaurantInfo$.pipe(
-    map(res => res ? res.name : 'Add New Restaurant')
-  );
+  ); */
+  title$ = this.restaurantInfo ? this.restaurantInfo.name : 'Add New Restaurant';
   
   //restaurantInfo:Restaurant | undefined | null;
   restaurantListForm!: FormGroup;
@@ -77,7 +76,7 @@ export class RestaurantEditComponent implements OnInit {
         const id:number = +param.get('id')!;
         //console.log(`id is : ${id}`);
         if(id > 0)
-          this.restaurantDisplay(this.restaurantInfo$);
+          this.getRestaurantData(id);
         else{
           this.addRestaurantImage = '../../../assets/img/add-restaurant.jpeg';;
           //this.restaurantInfo = null;
@@ -122,7 +121,7 @@ export class RestaurantEditComponent implements OnInit {
     });
   }
 
-  /* getRestaurantData(id:number){
+  getRestaurantData(id:number){
     this._resService.getRestaurantData(id).subscribe({
       next : data => {
         //console.log(`********* restaurant data is : ${JSON.stringify(data)}`);
@@ -137,28 +136,25 @@ export class RestaurantEditComponent implements OnInit {
         //this._router.navigate(['/restaurants']);
       }
     });
-  } */
+  }
 
-  restaurantDisplay(value:Observable<Restaurant | undefined>){
+  restaurantDisplay(value:Restaurant){
     if(this.restaurantListForm){
       this.restaurantListForm.reset();
     }
-    value.subscribe(data => {
-      //this.title = `${data?.name}`;
-      //console.log(data.restaurantImageUrl);
+    console.log(`value : ${value}`);
       this.restaurantListForm.patchValue({
-        id : data?.id!,
-        name : data?.name!,
-        description : data?.description!,
-        address : data?.address!,
-        phone : data?.phone!,
-        email : data?.email!,
-        category : data?.category!,
-        contact_person : data?.contact_person!,
-        rating : data?.rating!,
-        restaurantImageUrl : data?.restaurantImageUrl!
+        id : value?.id!,
+        name : value?.name!,
+        description : value?.description!,
+        address : value?.address!,
+        phone : value?.phone!,
+        email : value?.email!,
+        category : value?.category!,
+        contact_person : value?.contact_person!,
+        rating : value?.rating!,
+        restaurantImageUrl : value?.restaurantImageUrl!
       });
-    })
     
   }
 
@@ -166,19 +162,16 @@ export class RestaurantEditComponent implements OnInit {
   onFormSubmit():void{
     if(this.restaurantListForm.valid){
       if(this.restaurantListForm.dirty){
-        const resData = {...this.restaurantInfo$, ...this.restaurantListForm.value}
+        const resData = {...this.restaurantInfo, ...this.restaurantListForm.value}
         console.log(`-------- onFormSubmit() -> resData : ${JSON.stringify(resData)}`);
         let action:string = 'update';
-        if(!this.restaurantListForm.value.id){
+        if(!this.restaurantListForm.value.id  || this.restaurantListForm.value.id == 0){
           action = 'add';
           delete this.restaurantListForm.value.id;
-          this._resService.addRestaurant(resData);
-          //this._resService.addNewRestaurant(resData);
-        }else{
-        //console.log(action);
+          this._resService.addRestaurant(this.restaurantListForm.value);
+        }
+        else
           this._resService.updateRestaurant(resData);
-        } 
-        this._router.navigate(['/restaurants']);
         /* addEditRestaurant(resData,action).subscribe({ 
           next : (data) => this.onFormSubmitComplete(data),
           error : err => {
@@ -186,9 +179,8 @@ export class RestaurantEditComponent implements OnInit {
             this.errorMessage = err.error.message;
           }
         }); */
-      }else{
-        this.onFormSubmitComplete('nothing changed');
       }
+      this.onFormSubmitComplete();
     }else{
       this.errorMessage = 'Please correct the validation errors';
     }
@@ -196,22 +188,17 @@ export class RestaurantEditComponent implements OnInit {
 
   openDeleteRestaurantModal(modalToOpen:any){
     //this.restInfo = data;
-    this._restModalService.open(modalToOpen).result.then(
-			(result) => {
-				//console.log(`Closed with: ${result}`);
-			},
-			(reason) => {
-			},
-		);
+    this._restModalService.open(modalToOpen);
   }
 
   onDelete():void{
-    //console.log(this.restaurantListForm.value.id);
-    this._resService.deleteRestaurant(this.restaurantListForm.value);
+    let res:Restaurant = {...this.restaurantListForm.value, added_on : this.restaurantInfo.added_on};
+    this._resService.deleteRestaurant(res);
     this._restModalService.dismissAll('deleteRestaurantModal');
+    this.onFormSubmitComplete();
   }
 
-  onFormSubmitComplete(data:any){
+  onFormSubmitComplete(){
     //console.log(JSON.stringify(data));
     this.restaurantListForm.reset();
     this._router.navigate(['/restaurants']);

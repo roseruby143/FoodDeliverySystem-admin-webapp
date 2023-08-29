@@ -45,10 +45,10 @@
                                                 <i *ngIf="modifiedBy == 'price' && !booleanValue" class="fa fa-arrow-down"></i>
                                             </th>
                                             <th>Description</th>
-                                            <!-- <th (click)="sort('category')">Category
+                                            <th (click)="sort('category')">Category
                                                 <i *ngIf="modifiedBy == 'category' && booleanValue" class="fa fa-arrow-up"></i>
                                                 <i *ngIf="modifiedBy == 'category' && !booleanValue" class="fa fa-arrow-down"></i>
-                                            </th>-->                                        
+                                            </th>                                        
                                             <!-- <th>
                                                 <a class="btn btn-sm" role="button"
                                                         (click)="toggleImage()">
@@ -71,7 +71,7 @@
                                             </td>
                                             <td>{{data.price | currency}}</td>
                                             <td>{{data.description}}</td>
-                                            <!-- <td>{{data.category}}</td> -->
+                                            <td>{{data.category}}</td>
                                             <!-- <td>
                                                 <img *ngIf="showImage && data.dishImageUrl"
                                                     [src]="data.dishImageUrl"

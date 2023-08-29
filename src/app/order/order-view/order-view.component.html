@@ -39,22 +39,6 @@
                                             <i *ngIf="modifiedBy == 'totalItems' && booleanValue" class="fa fa-arrow-up"></i>
                                             <i *ngIf="modifiedBy == 'totalItems' && !booleanValue" class="fa fa-arrow-down"></i>
                                         </th>
-                                        <th (click)="sort('itemsSubTotal', booleanValue)">Sub-Total
-                                            <i *ngIf="modifiedBy == 'itemsSubTotal' && booleanValue" class="fa fa-arrow-up"></i>
-                                            <i *ngIf="modifiedBy == 'itemsSubTotal' && !booleanValue" class="fa fa-arrow-down"></i>
-                                        </th>
-                                        <th (click)="sort('taxCharges', booleanValue)">Tax
-                                            <i *ngIf="modifiedBy == 'taxCharges' && booleanValue" class="fa fa-arrow-up"></i>
-                                            <i *ngIf="modifiedBy == 'taxCharges' && !booleanValue" class="fa fa-arrow-down"></i>
-                                        </th>
-                                        <th (click)="sort('deliveryCharges', booleanValue)">Delivery Charge
-                                            <i *ngIf="modifiedBy == 'deliveryCharges' && booleanValue" class="fa fa-arrow-up"></i>
-                                            <i *ngIf="modifiedBy == 'deliveryCharges' && !booleanValue" class="fa fa-arrow-down"></i>
-                                        </th>
-                                        <th (click)="sort('driverTip', booleanValue)">Driver Tip
-                                            <i *ngIf="modifiedBy == 'driverTip' && booleanValue" class="fa fa-arrow-up"></i>
-                                            <i *ngIf="modifiedBy == 'driverTip' && !booleanValue" class="fa fa-arrow-down"></i>
-                                        </th>
                                         <th (click)="sort('totalAmount', booleanValue)">Total
                                             <i *ngIf="modifiedBy == 'totalAmount' && booleanValue" class="fa fa-arrow-up"></i>
                                             <i *ngIf="modifiedBy == 'totalAmount' && !booleanValue" class="fa fa-arrow-down"></i>
@@ -75,10 +59,12 @@
                                             <i *ngIf="modifiedBy == 'delivery' && booleanValue" class="fa fa-arrow-up"></i>
                                             <i *ngIf="modifiedBy == 'delivery' && !booleanValue" class="fa fa-arrow-down"></i>
                                         </th>
+                                        <th>Instruction</th>
                                         <th (click)="sort('driver', booleanValue)">Driver
                                             <i *ngIf="modifiedBy == 'driver' && booleanValue" class="fa fa-arrow-up"></i>
                                             <i *ngIf="modifiedBy == 'driver' && !booleanValue" class="fa fa-arrow-down"></i>
                                         </th>
+                                        <th>Address</th>
                                         <th (click)="sort('orderDate', booleanValue)">Order Date
                                             <i *ngIf="modifiedBy == 'orderDate' && booleanValue" class="fa fa-arrow-up"></i>
                                             <i *ngIf="modifiedBy == 'orderDate' && !booleanValue" class="fa fa-arrow-down"></i>
@@ -96,22 +82,20 @@
                                         <td role="button" [routerLink]="['/orders',data.orderId,'edit']"><u>{{data.orderId}}</u></td>
                                         <td>{{data.orderStatus}}</td>
                                         <td>{{data.totalItems}}</td>
-                                        <td>{{data.itemsSubTotal}}</td>
-                                        <td>{{data.taxCharges }}</td>
-                                        <td>{{data.deliveryCharges}}</td>
-                                        <td>{{data.driverTip}}</td>
-                                        <td>{{data.totalAmount}}</td>
+                                        <td>{{data.totalAmount | number : '1.2-2' | currency}}</td>
                                         <td>{{data.paymentStatusTitle}}</td>
                                         <td>{{data.paymentMethodTitle}} </td>
-                                        <td role="button" [routerLink]="['/users',data.user.id]"><u>{{data.user.first_name}} {{data.user.last_name}}</u> </td>
+                                        <td role="button" [routerLink]="['/users',data.user!.id]"><u>{{data.user!.first_name}} {{data.user!.last_name}}</u> </td>
                                         <td>
                                             <u role="button" [routerLink]="['/deliveries',data.delivery.id]" *ngIf="data.delivery">{{data.delivery.id}}</u>
                                             <span *ngIf="!data.delivery">Pending</span>
                                         </td>
+                                        <td>{{data.instruction}}</td>
                                         <td>
                                             <u role="button" [routerLink]="['/drivers',data.delivery?.driver?.id]" *ngIf="data.delivery?.driver">{{data.delivery?.driver?.first_name}} {{data.delivery?.driver?.last_name}} </u>
                                             <span *ngIf="!data.delivery?.driver">Not Assigned</span>
                                         </td>
+                                        <td><p>{{data.address.street}}, {{data.address.city}}, {{data.address.state}}{{data.address.pincode}}</p></td>
                                         <td>{{data.orderDate | date}}</td>
                                         <td class="d-flex justify-content-evenly">
                                             <a  role="button" [routerLink]="['/orders',data.orderId,'edit']"><i class="fa fa-edit custIconColor" title="Edit Orders"></i></a>

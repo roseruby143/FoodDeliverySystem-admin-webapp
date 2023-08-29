@@ -22,7 +22,7 @@ export class DeliveryViewComponent implements OnInit {
   /* ******** For Pagination ******* */
   page: number = 1;
   count: number = 0;
-  tableSize: number = 3;
+  tableSize: number = 7;
   //tableSizes: any = [3, 6, 9, 12];
 
   /* ********* For Sorting Table ********** */
@@ -56,8 +56,18 @@ export class DeliveryViewComponent implements OnInit {
       param => {
         const id:number = +param.get('id')!;
         //console.log(id);
+        const driverId:number = +param.get('driverId')!;
         if(id > 0){
-          this._OrderService.getDeliveriesByDriver(id).subscribe({
+          this._OrderService.getDeliveryData(id).subscribe({
+            next: (data:Delivery) => {
+              this.allDeliveries = [];
+              this.allDeliveries.push(data);
+              this.filteredDeliveries = this.allDeliveries;
+            },
+            error : err => this.errorMessage = err.error.message
+          });
+        }else if(driverId > 0){
+          this._OrderService.getDeliveriesByDriver(driverId).subscribe({
             next: (data:Delivery[]) => {
               this.allDeliveries = data;
               this.filteredDeliveries = this.allDeliveries;

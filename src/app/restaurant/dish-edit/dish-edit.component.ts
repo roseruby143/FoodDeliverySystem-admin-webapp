@@ -56,7 +56,7 @@ export class DishEditComponent implements OnInit {
     this._sub = this._route.paramMap.subscribe(
       param => {
         const id:number = +param.get('id')!;
-        console.log(`id is : ${id}`);
+        //console.log(`id is : ${id}`);
         if(id > 0)
           this.getDishData(id);
         else{
@@ -96,6 +96,7 @@ export class DishEditComponent implements OnInit {
       price : ['', [Validators.required, NumberValidator.price()]],
       restaurant : ['', Validators.required],
       description : [''],
+      category : [''],
       dishImageUrl : ['']
     });
 
@@ -134,13 +135,14 @@ export class DishEditComponent implements OnInit {
       this.dishListForm.reset();
     }
     this.title = `${this.dishInfo!.dish_name}`;
-    //console.log(this.dishInfo!.dishImageUrl);
+    //console.log(this.dishInfo!);
     this.dishListForm.patchValue({
       dishId : this.dishInfo!.dishId!,
       dish_name : this.dishInfo!.dish_name!,
       price : this.dishInfo!.price,
       restaurant : this.dishInfo!.restaurant.id,//`${data.restaurant.id} - ${data.restaurant.name}`,
       description : this.dishInfo!.description!,
+      category : this.dishInfo!.category,
       dishImageUrl : this.dishInfo!.dishImageUrl!
     });
 

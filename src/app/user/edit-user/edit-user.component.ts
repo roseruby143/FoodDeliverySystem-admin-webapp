@@ -1,3 +1,4 @@
+import { Address } from './../../model/address';
 import { GenericValidator } from './../../shared/generic-validator';
 import { Subscription, Observable, fromEvent, merge, debounceTime } from 'rxjs';
 import { FormControlName, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -6,6 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from './../../services/user.service';
 import { User } from './../../model/user';
 import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
+import { NumberValidator } from 'src/app/shared/number-validator';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'fds-edit-user',
@@ -26,6 +29,8 @@ export class EditUserComponent implements OnInit {
   title:string = '';
   //tagLine:string = environment.projectTagLine;
   userInfo:User | undefined | null;
+
+  //userInfowithAddress!:{user:User,addresses:Address[]};
   userListForm!: FormGroup;
   editUser:boolean = false;
   errorMessage:string='';
@@ -35,7 +40,11 @@ export class EditUserComponent implements OnInit {
     {id:'inactive',status:'inactive'}
   ];
 
-  constructor(private _fb : FormBuilder, private _route: ActivatedRoute, private _userService : UserService, private _router : Router, private _restModalService : NgbModal) { 
+  get status(): boolean {
+    return localStorage.getItem('status') ? true : false;
+  }
+
+  constructor(private _fb : FormBuilder, private _route: ActivatedRoute, private _userService : UserService, private _router : Router, private _restModalService : NgbModal, private _datePipe : DatePipe) { 
     this._validationMessages = {
       email : {
         required : 'Please enter your email',
@@ -44,8 +53,8 @@ export class EditUserComponent implements OnInit {
       first_name : {
         required : 'Please enter the first name'
       },
-      phone : {
-        pattern : 'Please provide 10 digit phone number'
+      status : {
+        required : 'Please select the status'
       }
     };
     this._genericValidator = new GenericValidator(this._validationMessages);
@@ -58,8 +67,15 @@ export class EditUserComponent implements OnInit {
       param => {
         const id:number = +param.get('id')!;
         //console.log(`id is : ${id}`);
-        if(id > 0)
+        if(id > 0){
+          /* this._userService.setUserIdToEdit(id);
+          this._userService.userDatawithAddress$
+          .subscribe(data => {
+            this.userInfowithAddress = data;
+            console.log('User info with address :', JSON.stringify(this.userInfowithAddress));
+          }); */
           this.getUserData(id);
+        }
         else{
           this.addUserImage = '../../../assets/img/profile-new-user.png';
           this.userInfo = null;
@@ -95,14 +111,10 @@ export class EditUserComponent implements OnInit {
       first_name : ['', Validators.required],
       last_name : [''],
       email : ['', [Validators.required, Validators.email]],
-      street: [''],
-      city: [''],
-      state: [''],
-      country: [''],
-      pincode: [''],
-      phone : ['',[Validators.pattern('^[1-9][0-9]{9}$')]],
-      status : [''],
-      imgUrl : ['']
+      password : ['', Validators.required],
+      status : ['', Validators.required],
+      imgUrl : [''],
+      created_on : ['']
     });
   }
 
@@ -131,17 +143,13 @@ export class EditUserComponent implements OnInit {
     //console.log(data.imgUrl);
     this.userListForm.patchValue({
       id : data.id!,
+      email : data.email,
+      password: data.password,
       first_name : data.first_name!,
       last_name : data.last_name!,
-      phone : data.phone!,
-      email : data.email!,
-      street : data.street,
-      city : data.city,
-      state : data.state,
-      country : data.country,
-      pincode : data.pincode,
       status : data.status!,
-      imgUrl : data.imgUrl!
+      imgUrl : data.imgUrl!,
+      created_on : this._datePipe.transform(data.created_on) 
     });
   }
 
@@ -149,27 +157,39 @@ export class EditUserComponent implements OnInit {
   onFormSubmit():void{
     if(this.userListForm.valid){
       if(this.userListForm.dirty){
-        const resData = {...this.userInfo, ...this.userListForm.value};
+        const resData :User = {...this.userInfo, ...this.userListForm.value};
+        //console.log(JSON.stringify(resData));
+        /* const userData:User = {
+          id : this.userListForm.value.id,
+          first_name : this.userListForm.value.first_name!,
+          last_name : this.userListForm.value.last_name!,
+          email : this.userListForm.value.email!,
+          status : this.userListForm.value.status!,
+          imgUrl : this.userListForm.value.imgUrl!
+        } */
 
         /****** Remove it later. Just for development ******/
-        if(!resData.password)
-        resData.password = 'test';
+        /* if(!resData.password)
+        resData.password = 'test'; */
 
         //console.log(`-------- onFormSubmit() -> resData : ${JSON.stringify(resData)}`);
         let action:string = 'update';
-        if(this.userListForm.value.id < 1){
+        resData.created_on = this.userInfo?.created_on;
+        if(this.userListForm.value.id == null || this.userListForm.value.id < 1){
           action = 'add';
           delete this.userListForm.value.id;
+          console.log(JSON.stringify(resData));
           if(!this.userListForm.value.status)
             this.userListForm.value.status = 'active';
         }
         this._userService.addEditUser(resData,action).subscribe({ 
-          next : (data) => this.onFormSubmitComplete(data),
-          error : err => {
-            console.log(err);
-            this.errorMessage = err.error.message;
-          }
-        });
+            next : (data) => this.onFormSubmitComplete(data),
+            error : err => {
+              console.log(err);
+              this.errorMessage = err.error.message;
+            }
+          });
+        
       }else{
         this.onFormSubmitComplete('nothing changed');
       }

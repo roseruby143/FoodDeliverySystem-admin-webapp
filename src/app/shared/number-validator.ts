@@ -19,4 +19,14 @@ export class NumberValidator {
       return null;
     };
   }
+
+  static zipLengthValidator(len: number): ValidatorFn {
+    return (c: AbstractControl): { [key: string]: boolean } | null => {
+      //console.log(c.value);
+      if (c.value && (isNaN(c.value) || c.value.toString().length!=len)) {
+        return { pincodeLength: true };
+      }
+      return null;
+    };
+  }
 }
