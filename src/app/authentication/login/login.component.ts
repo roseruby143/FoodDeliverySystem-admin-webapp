@@ -132,7 +132,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('adminId', response.adminId.toLocaleString());
             //localStorage.setItem('user', response.email);
             localStorage.setItem('status', 'loggedIn');
-            this._router.navigateByUrl('/restaurants');
+            this._router.navigateByUrl('/welcome');
           }
        }, 
        error : err => {

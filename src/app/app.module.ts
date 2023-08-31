@@ -1,3 +1,4 @@
+import { AuthenticationGuard } from './services/authentication.guard';
 import { ResponseInterceptor } from './interceptor/response.interceptor';
 import { RequestInterceptor } from './interceptor/request.interceptor';
 import { AdminModule } from './admin/admin.module';
@@ -20,11 +21,13 @@ import { DriverModule } from './driver/driver.module';
 import { OrderModule } from './order/order.module';
 import { ProfileModule } from './profile/profile.module';
 import { DatePipe } from '@angular/common';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,7 @@ import { DatePipe } from '@angular/common';
     ReactiveFormsModule,
     RouterModule.forChild([
       {path: 'login' , component: LoginComponent},
+      {path: 'welcome' , component: WelcomeComponent, canActivate:[AuthenticationGuard]},
       {path: '' , redirectTo: 'login', pathMatch:'full'},
       {path: '**' , redirectTo: 'login', pathMatch:'full'}
     ]),

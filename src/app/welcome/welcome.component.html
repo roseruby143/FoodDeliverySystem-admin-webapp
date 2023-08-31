@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-12 col-md-1 "></div>
+    <div class="col mx-4 mx-md-0 card px-0 my-4 justify-content-center shadow rounded-0">
+        <div class="row border-secondary rounded-0">
+            <div class="card-header col-12 col-md-4 d-flex pb-3 rounded-0">
+                <div class="row d-flex flex-column justify-content-center">
+                    <div>
+                        <img src="../../assets/img/logo.png" alt="EatOut" style="width: inherit;" class="rounded-pill">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body col-12 col-md-8  px-5">
+                <div class="mt-4 text-center">
+                    <h4><b>Welcome to the Admin Console!</b></h4>
+                    <h6>Select from the range of different actions that you as an admin can perform.</h6>
+                </div>
+                <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+                    <div class="col">
+                      <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Admins</h5>
+                            <p class="card-text mt-3">As an admin you can view, add or update other admins. You can also change the status of other admins.</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a routerLink="/view/admins" class="btn btn-primary mt-4">Admins</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Users</h5>
+                            <p class="card-text mt-3">As an admin you can view, add or update all users. You can also change the status of users. Be mindful of their personal data!</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a routerLink="/users" class="btn btn-primary mt-4">Users</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">View Restaurants</h5>
+                                <p class="card-text mt-3">As an admin you can view, add, update or delete all restaurants. You can also manage dishes of these restaurants.</p>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a routerLink="/restaurants" class="btn btn-primary mt-4">Restaurants</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                      <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Orders</h5>
+                            <p class="card-text mt-3">As an admin you can view, add or update all orders. You can also manage their orderitems and deliveries associated with them.</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a routerLink="/orders" class="btn btn-primary mt-4">Orders</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Drivers</h5>
+                            <p class="card-text mt-3">As an admin you can view, add or update all drivers. You can also manage their status and see their deliveries.</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a routerLink="/drivers" class="btn btn-primary mt-4">Drivers</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">My Profile</h5>
+                            <p class="card-text mt-3">As an admin you can view your profile and update your personal information and change your status. See more... </p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a (click)="editProfile()" class="btn btn-primary mt-4">Profile</a>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-1"></div>
+</div>
