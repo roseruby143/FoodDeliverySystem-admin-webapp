@@ -5,7 +5,7 @@
             <div class="card-header col-12 col-md-4 d-flex pt-5 pb-3 rounded-0">
                 <div class="" *ngIf="this.deliveryInfo; else newDelivery">
                     <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title| titlecase}}</div>
-                    <img [src]="this.addDeliveryImage"  class="img-fluid rounded-circle mt-4 bg-white  w-75 mx-auto d-block" alt="" *ngIf="this.addDeliveryImage"/>
+                    <img [src]="this.addDeliveryImage"  class="img-fluid rounded-circle mt-4 bg-white  w-75 mx-auto d-block" alt="" onerror="this.src='../../../assets/img/add-delivery.png';"/>
                 </div>
             </div>
             <div class="card-body col-12 col-md-8  px-5">
