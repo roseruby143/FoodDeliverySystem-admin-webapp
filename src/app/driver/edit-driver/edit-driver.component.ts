@@ -162,7 +162,7 @@ export class EditDriverComponent implements OnInit {
           next : (data) => this.onFormSubmitComplete(data),
           error : err => {
             /* this.driverListForm.controls['email'].setErrors({'exists': true});
-            console.log(err); */
+            //console.log(err); */
             this.errorMessage = err.error.message;
           }
         });
@@ -187,7 +187,7 @@ export class EditDriverComponent implements OnInit {
 
   onDeactivate():void{
     this.driverListForm.value.status = this.driverListForm.value.status.toLocaleLowerCase() === 'active'?'inactive':'active';
-    console.log(this.driverListForm.value.status);
+    //console.log(this.driverListForm.value.status);
 
     const resData = {...this.driverInfo, ...this.driverListForm.value};
     this._driverService.addEditDriver(resData,'update').subscribe({ 

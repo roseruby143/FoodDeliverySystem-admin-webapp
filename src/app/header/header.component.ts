@@ -91,7 +91,7 @@ export class HeaderComponent implements OnInit {
       next : () => {
       },
       error : err => {
-        console.log(`Error while logging out : ${err}`);
+        //console.log(`Error while logging out : ${err}`);
       }
     });
 

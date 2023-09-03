@@ -66,7 +66,7 @@ export class GenericValidator {
       if (container.controls.hasOwnProperty(controlKey)) {
         if (container.controls[controlKey].errors) {
           errorCount += Object.keys(container.controls[controlKey as keyof {}].errors).length;
-          console.log(errorCount);
+          //console.log(errorCount);
         }
       }
     }

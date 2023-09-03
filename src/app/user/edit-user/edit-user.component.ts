@@ -72,7 +72,7 @@ export class EditUserComponent implements OnInit {
           this._userService.userDatawithAddress$
           .subscribe(data => {
             this.userInfowithAddress = data;
-            console.log('User info with address :', JSON.stringify(this.userInfowithAddress));
+            //console.log('User info with address :', JSON.stringify(this.userInfowithAddress));
           }); */
           this.getUserData(id);
         }
@@ -178,14 +178,14 @@ export class EditUserComponent implements OnInit {
         if(this.userListForm.value.id == null || this.userListForm.value.id < 1){
           action = 'add';
           delete this.userListForm.value.id;
-          console.log(JSON.stringify(resData));
+          //console.log(JSON.stringify(resData));
           if(!this.userListForm.value.status)
             this.userListForm.value.status = 'active';
         }
         this._userService.addEditUser(resData,action).subscribe({ 
             next : (data) => this.onFormSubmitComplete(data),
             error : err => {
-              console.log(err);
+              //console.log(err);
               this.errorMessage = err.error.message;
             }
           });
@@ -212,7 +212,7 @@ export class EditUserComponent implements OnInit {
   onDeactivate():void{
     //console.log(this.userListForm.value.id);
     this.userListForm.value.status = this.userListForm.value.status.toLocaleLowerCase() === 'active'?'inactive':'active';
-    console.log(this.userListForm.value.status);
+    //console.log(this.userListForm.value.status);
 
     const resData = {...this.userInfo, ...this.userListForm.value};
     this._userService.addEditUser(resData,'update').subscribe({ 

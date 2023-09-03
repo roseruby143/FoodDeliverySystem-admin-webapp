@@ -153,7 +153,7 @@ export class RestaurantListComponent /* implements OnInit  */{
     this.modifiedBy = colName;
     //console.log(`Sort col name is : ${colName}`)
     //const data = this.allRestaurants$ | async
-    console.log(JSON.stringify(this.allRestaurantList));
+    //console.log(JSON.stringify(this.allRestaurantList));
     
     this._generalService.sortObservable(this.allRestaurants$ ,colName,boolean);
     this.booleanValue = !this.booleanValue;

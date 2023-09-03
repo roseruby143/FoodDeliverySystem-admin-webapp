@@ -246,13 +246,13 @@ export class OrderEditComponent implements OnInit {
 
         /********** Creating Delivery *******/
         /* let driverId = Math.floor(Math.random() * (7 - 2 + 1) + 2);
-        console.log(`driverId : ${driverId}`); */
+        //console.log(`driverId : ${driverId}`); */
 
         this._orderService.addEditOrder(resData,action).subscribe({ 
           next : (data) => this.onFormSubmitComplete(data),
           error : err => {
             /* this.orderListForm.controls['email'].setErrors({'exists': true});
-            console.log(err); */
+            //console.log(err); */
             this.errorMessage = err.error.message;
           }
         });

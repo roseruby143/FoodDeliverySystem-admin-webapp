@@ -141,7 +141,7 @@ export class ProfileEditComponent implements OnInit {
         //console.log(JSON.stringify(this.adminListForm.value));
         let resData = {...this.adminInfo, ...this.adminListForm.value};
         resData.addedOn = this.adminInfo?.addedOn;
-        console.log(JSON.stringify(resData));
+        //console.log(JSON.stringify(resData));
           //this.adminListForm.value.driver.id = driver[0].id;
         
         //console.log(`-------- onFormSubmit() -> resData : ${JSON.stringify(resData)}`);
@@ -193,11 +193,11 @@ export class ProfileEditComponent implements OnInit {
     .subscribe({
       next : (response) => {
       // Handle successful upload response
-      console.log('File uploaded successfully:', response);
+      //console.log('File uploaded successfully:', response);
       }, 
       error : (err) => {
       // Handle upload error
-      console.error('File upload error:', err);
+      //console.error('File upload error:', err);
       }
     });
       

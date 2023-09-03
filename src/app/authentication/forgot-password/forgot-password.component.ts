@@ -87,7 +87,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   checkModalInput(emailInput:any){
-    console.log(`--- forgotPasswordFormDate is: ${emailInput.forgotPasswordEmail} and its length is : ${(<string>emailInput.forgotPasswordEmail).trim().length}`);
+    //console.log(`--- forgotPasswordFormDate is: ${emailInput.forgotPasswordEmail} and its length is : ${(<string>emailInput.forgotPasswordEmail).trim().length}`);
     let emailInputElement = document.getElementById('forgotPasswordEmail');
     
   }

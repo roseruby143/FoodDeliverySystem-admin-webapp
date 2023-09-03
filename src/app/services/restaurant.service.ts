@@ -35,7 +35,7 @@ export class RestaurantService {
 
   saveRestaurant(operation: Action<Restaurant>): Observable<Action<Restaurant>> {
     const restaurant = operation.item;
-    console.log('saverestaurant', JSON.stringify(operation.item));
+    //console.log('saverestaurant', JSON.stringify(operation.item));
     if (operation.action === 'add') {
       // Assigning the id to null is required for the inmemory Web API
       // Return the restaurant from the server
@@ -56,7 +56,7 @@ export class RestaurantService {
       const url = `${environment.baseUrl}/v1/restaurant/${restaurant.id}`;
       return this._httpClient.put<Restaurant>(url, restaurant, { headers: this.headers })
         .pipe(
-          tap(data => console.log('Updated restaurant: ' + JSON.stringify(data))),
+          //tap(data => console.log('Updated restaurant: ' + JSON.stringify(data))),
           // Return the original restaurant so it can replace the restaurant in the array
           map(() => ({ item: restaurant, action: operation.action }))
         );
@@ -71,7 +71,7 @@ export class RestaurantService {
       return [...restaurants, operation.item];
     } else if (operation.action === 'update') {
       // Return a new array with the updated restaurant replaced
-      console.log('after modify', operation.item);
+      //console.log('after modify', operation.item);
       return restaurants.map(restaurant => restaurant.id === operation.item.id ? operation.item : restaurant)
     } else if (operation.action === 'delete') {
       // Filter out the deleted restaurant
@@ -132,26 +132,26 @@ export class RestaurantService {
 
   /* Add new Restaurant or Edit Restaurants with Id */
   addEditRestaurant(restData:Restaurant,action:string):void{
-    console.log(`Inside addRestaurant of Restaurant Servive : ${JSON.stringify(restData)}`)
+    //console.log(`Inside addRestaurant of Restaurant Servive : ${JSON.stringify(restData)}`)
     if(action === 'update')
       this._httpClient.put<Restaurant>(`${environment.baseUrl}/v1/restaurant/${restData.id}`,restData,{headers:this.headers}).subscribe({
           next : data => {
-          console.log(`Update : ${JSON.stringify(data)}`);
+          //console.log(`Update : ${JSON.stringify(data)}`);
           //this.restaurantInsertSubject.next(data);
         },
         error : err => {
-          console.log(err);
+          //console.log(err);
         }
       });
     else
       //this.addNewRestaurant(restData);
       this._httpClient.post<Restaurant>(`${environment.baseUrl}/v1/restaurant`,restData,{headers:this.headers}).subscribe({
         next : data => {
-          console.log(`Add : ${JSON.stringify(data)}`);
+          //console.log(`Add : ${JSON.stringify(data)}`);
           //this.restaurantInsertSubject.next(data);
         },
         error : err => {
-          console.log(err);
+          //console.log(err);
         }
       });
   }
@@ -197,7 +197,7 @@ export class RestaurantService {
     }else{
       errMessage = err.message
     }
-    console.log(`service error : ${errMessage}`);
+    //console.log(`service error : ${errMessage}`);
     return EMPTY;
   }
 }

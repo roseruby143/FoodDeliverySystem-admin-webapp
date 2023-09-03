@@ -43,8 +43,8 @@ export class UserService {
           return this._httpClient.get<Address[]>(`${environment.baseUrl}/v1/user/${user.id}/address`, { headers: this._headers }).pipe(
             map(data => {
               return { user: {...user}, addresses: data }
-            }),
-            tap(data => console.log(JSON.stringify(data)))
+            })
+            //,tap(data => console.log(JSON.stringify(data)))
             
           );
           //addressesObservable.push(addressObservable);

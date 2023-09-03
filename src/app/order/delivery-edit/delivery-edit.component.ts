@@ -181,7 +181,7 @@ get deliveryStatus() {
           next : (data) => this.onFormSubmitComplete(data),
           error : err => {
             /* this.deliveryListForm.controls['email'].setErrors({'exists': true});
-            console.log(err); */
+            //console.log(err); */
             this.errorMessage = err.error.message;
           }
         });
