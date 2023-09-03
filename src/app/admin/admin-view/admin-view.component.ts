@@ -20,7 +20,7 @@ export class AdminViewComponent implements OnInit {
   /* ******** For Pagination ******* */
   page: number = 1;
   count: number = 0;
-  tableSize: number = 3;
+  tableSize: number = 7;
   //tableSizes: any = [3, 6, 9, 12];
 
   /* ********* For Sorting Table ********** */

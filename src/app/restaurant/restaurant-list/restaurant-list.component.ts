@@ -36,7 +36,7 @@ export class RestaurantListComponent /* implements OnInit  */{
     catchError(
       err => {
       //console.log(`restaurant list error handler : ${(this.errorMessage$)}`);
-      this._errorMessageSubject.next(err.message);
+      this._errorMessageSubject.next(err.error.message);
       return EMPTY;
     }),
     shareReplay(1)

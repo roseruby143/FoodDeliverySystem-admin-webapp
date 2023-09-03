@@ -136,7 +136,7 @@ export class AdminEditComponent implements OnInit {
   onRegister(){
     if (this.registerForm.valid) {
       if (this.registerForm.dirty) {
-        console.log(this.registerForm.value.adminId);
+        //console.log(this.registerForm.value.adminId);
         if(!this.registerForm.value.adminId || this.registerForm.value.adminId < 1){
           let admin:Admin = { ...this.adminData, ...this.registerForm.value };
           admin.email = this.registerForm.value.regEmail.email;
@@ -164,7 +164,7 @@ export class AdminEditComponent implements OnInit {
           .subscribe({ 
             next : () => this.onSaveComplete(),
             error : err => {
-              console.log(err.error.message);
+              //console.log(err.error.message);
               this.errorMessage = err.error.message;
             }
           });
@@ -275,7 +275,7 @@ export class AdminEditComponent implements OnInit {
     delete resData.regEmail;
     resData.email = this.registerForm.value.regEmail.email;
     resData.addedOn = this.adminData?.addedOn;
-    console.log(resData);
+    //console.log(resData);
     this._profileService.editAdmin(resData).subscribe({ 
       next : (data) => {
         this.onFormSubmitComplete(data)
