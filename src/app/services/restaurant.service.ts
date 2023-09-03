@@ -18,26 +18,6 @@ export class RestaurantService {
     //catchError(this.errorHandle)
   );
 
-  private restaurantInsertSubject = new Subject<Restaurant>();
-  restInsertAction$ = this.restaurantInsertSubject.asObservable();
-
-  /* restaurantWithAdd$ = merge(this.allRestaurant$ , this.restInsertAction$.pipe(
-    concatMap(newRes => {
-      return this._httpClient.post<Restaurant>(`${environment.baseUrl}/v1/restaurant`,newRes,{headers:this.headers})
-      .subscribe({
-        next : data => {
-          this.restaurantInsertSubject.next(data);
-        },
-        error : err => {
-          console.log(err);
-        }
-      })
-    })
-  )).pipe(
-    scan((acc , value) => 
-      (value instanceof Array) ? [...value ] : [...acc, value], [] as Restaurant[])
-  ); */
-
   private restaurantModifiedSubject = new Subject<Action<Restaurant>>();
   restaurantModifiedAction$ = this.restaurantModifiedSubject.asObservable();
 
@@ -50,6 +30,7 @@ export class RestaurantService {
       scan((acc, value) => 
         (value instanceof Array) ? [...value] : this.modifyRestaurant(acc, value), [] as Restaurant[]),
     shareReplay(1)
+    //,tap(data => console.log(JSON.stringify(data)))
   );
 
   saveRestaurant(operation: Action<Restaurant>): Observable<Action<Restaurant>> {

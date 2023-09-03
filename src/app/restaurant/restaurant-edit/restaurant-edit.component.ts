@@ -142,7 +142,7 @@ export class RestaurantEditComponent implements OnInit {
     if(this.restaurantListForm){
       this.restaurantListForm.reset();
     }
-    console.log(`value : ${value}`);
+    //console.log(`value : ${value}`);
       this.restaurantListForm.patchValue({
         id : value?.id!,
         name : value?.name!,
@@ -163,7 +163,7 @@ export class RestaurantEditComponent implements OnInit {
     if(this.restaurantListForm.valid){
       if(this.restaurantListForm.dirty){
         const resData = {...this.restaurantInfo, ...this.restaurantListForm.value}
-        console.log(`-------- onFormSubmit() -> resData : ${JSON.stringify(resData)}`);
+        //console.log(`-------- onFormSubmit() -> resData : ${JSON.stringify(resData)}`);
         let action:string = 'update';
         if(!this.restaurantListForm.value.id  || this.restaurantListForm.value.id == 0){
           action = 'add';
