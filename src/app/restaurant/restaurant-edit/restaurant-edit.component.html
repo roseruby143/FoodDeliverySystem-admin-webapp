@@ -5,7 +5,7 @@
             <div class="card-header col-12 col-md-4 d-flex pt-5 pb-3 rounded-0">
                 <div class="" *ngIf="this.restaurantInfo ; else newRestaurant">
                     <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title$ | titlecase}}</div>
-                    <img [src]=this.restaurantInfo.restaurantImageUrl  class="img-fluid rounded-circle mt-3" alt="" *ngIf="this.restaurantInfo?.restaurantImageUrl"/>
+                    <img [src]=this.restaurantInfo.restaurantImageUrl  class="img-fluid rounded-circle mt-3" alt="" onerror="this.src='../../../assets/img/add-restaurant.jpeg';"/>
                 </div>
             </div>
 

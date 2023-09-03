@@ -5,7 +5,7 @@
             <div class="card-header col-12 col-md-4 d-flex pt-5 pb-3 rounded-0">
                 <div class="" *ngIf="this.userInfo; else newUser">
                     <div class="h2 mt-4 text-center" id="exampleModalLabel">{{this.title| titlecase}}</div>
-                    <img [src]=this.userInfo.imgUrl  class="img-fluid rounded-circle mt-3  w-75 mx-auto d-block" alt="" *ngIf="this.userInfo?.imgUrl"/>
+                    <img [src]=this.userInfo.imgUrl  class="img-fluid rounded-circle mt-3  w-75 mx-auto d-block" alt="" onerror="this.src='../../../assets/img/profile-new-user.png';">
                 </div>
             </div>
             <div class="card-body col-12 col-md-8  px-5">
