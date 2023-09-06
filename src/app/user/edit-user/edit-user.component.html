@@ -119,7 +119,7 @@
                             <button type="submit" id="editUserButton" class="col-12 col-sm-3 col-xl-2 btn btn-secondary " [disabled]="!userListForm.valid">
                                 Save
                             </button>
-                            <a type="button" class="col-12 col-sm-3 col-xl-2 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/user',userInfo?.id,'orders']">
+                            <a type="button" class="col-12 col-sm-3 col-xl-2 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/user',userInfo.id,'orders']"  *ngIf="this.userInfo">
                                 View Orders
                             </a>
                             <a type="button" class="col-12 col-sm-3 col-xl-2 my-2 my-sm-0 btn btn-secondary" [routerLink]="['/users']">

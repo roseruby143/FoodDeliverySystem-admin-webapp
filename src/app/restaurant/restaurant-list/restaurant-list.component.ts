@@ -66,17 +66,6 @@ export class RestaurantListComponent /* implements OnInit  */{
   booleanValue: any = true;
   modifiedBy : string = 'id';
 
-  /* private _listFilter = '';
-  private _closeResult = '' */;
-
-  /* get listFilter(): string {
-    return this._listFilter;
-  }
-  set listFilter(value: string) {
-    this._listFilter = value;
-    //this.filteredRestaurants$ = this.listFilter ? this.performFilter(this.listFilter) : this.allRestaurants$;
-  } */
-
   constructor(private _restService:RestaurantService, private _router : Router, private _restModalService : NgbModal, private _generalService : GeneralService) { }
 
   /* ngOnInit(): void {

@@ -72,6 +72,18 @@
                             </div>
                         </div>
 
+                        <!-- Status input -->
+                        <div class="form-group row form-outline mb-4 pl-0">
+                            <label class="form-label d-block col-sm-3 px-0" for="status">Status</label>
+                            <div class="d-block col-sm-8">
+                                <input type="text" id="status" class="form-control text-secondary bg-light" formControlName="status" 
+                                [ngClass]="{'is-invalid': displayMessage['status']}" readonly/>
+                                <span class="invalid-feedback">
+                                    {{displayMessage['status']}}
+                                </span>
+                            </div>
+                        </div>
+
                         <!-- Admin Since input -->
                         <div class="form-group row form-outline mb-4 pl-0">
                             <label class="form-label d-block col-sm-3 px-0" for="addedOn">Admin Since</label>

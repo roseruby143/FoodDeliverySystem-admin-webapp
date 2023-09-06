@@ -15,7 +15,11 @@ export class RestaurantService {
   headers = new HttpHeaders({'Content-Type' : 'application/json'});
 
   allRestaurant$ = this._httpClient.get<Restaurant[]>(`${environment.baseUrl}/v1/restaurant`,{headers:this.headers}).pipe(
-    //catchError(this.errorHandle)
+    catchError(error => {
+      //console.error('HTTP request error:', error);
+      // Return a fallback value or handle the error as needed
+      return of([]); // You can return an empty array or any other fallback value
+    })
   );
 
   private restaurantModifiedSubject = new Subject<Action<Restaurant>>();
@@ -81,7 +85,7 @@ export class RestaurantService {
   }
 
   addRestaurant(newRestaurant: Restaurant): void {
-    newRestaurant = newRestaurant;
+    //newRestaurant = newRestaurant;
     this.restaurantModifiedSubject.next({
       item: newRestaurant,
       action: 'add'
@@ -157,8 +161,8 @@ export class RestaurantService {
   }
 
   /* Delete Restaurants by id*/
-  deleteRestaurantById(id:Restaurant):Observable<Restaurant>{
-    return this._httpClient.delete<Restaurant>(`${environment.baseUrl}/v1/restaurant/${id}`,{headers:this.headers});
+  deleteRestaurantById(res:Restaurant):Observable<Restaurant>{
+    return this._httpClient.delete<Restaurant>(`${environment.baseUrl}/v1/restaurant/${res.id}`,{headers:this.headers});
   }
 
   /************************************** Dishes CRUD Operations *******************************/
