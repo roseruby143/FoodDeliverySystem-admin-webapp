@@ -41,6 +41,9 @@ export class EditDriverComponent implements OnInit {
       first_name : {
         required : 'Please enter the first name'
       },
+      last_name : {
+        required : 'Please enter the last name'
+      },
       phone : {
         required : 'Please enter the phone number',
         pattern : 'Please provide 10 digit phone number'
@@ -100,7 +103,7 @@ export class EditDriverComponent implements OnInit {
     this.driverListForm = this._fb.group({
       id : [0],
       first_name : ['', Validators.required],
-      last_name : [''],
+      last_name : ['', Validators.required],
       email : ['', [Validators.required, Validators.email]],
       phone : ['',[Validators.required, Validators.pattern('^[1-9][0-9]{9}$')]],
       vehicalNumber: ['', Validators.required],

@@ -47,7 +47,8 @@
                         </div>
 
                         <div class="form-group row mt-2 pl-0">
-                            <label class="col-sm-3 px-0" for="last_name">Last Name</label>
+                            <label class="col-sm-3 px-0" for="last_name">Last Name<sup
+                                class="text-danger">*</sup></label>
                             <div class="d-block col-sm-9 px-0">
                                 <input type="text" id="last_name" class="form-control col" name="last_name" formControlName="last_name">
                             </div>
@@ -83,7 +84,8 @@
                         </div>
 
                         <div class="dropdown row mt-2 pl-0">
-                            <label class="col-sm-3 px-0" for="status">Status</label>
+                            <label class="col-sm-3 px-0" for="status">Status<sup
+                                class="text-danger">*</sup></label>
                             <div class="d-block col-sm-9 px-0">
                                 <select class="btn btn-outline-secondary text-start col" id="restDeatilDropdown" formControlName="status" [ngClass]="{'is-invalid': displayMessage['status']}">
                                     <option class="dropdown-item" id="chooseStatus" [ngValue]="null" disabled>Choose a Status</option>
@@ -106,10 +108,10 @@
                             <input type="text" id="rating" class="form-control col" name="rating" formControlName="rating">
                         </div>
 
-                        <div class="form-group row mt-2 pl-0">
+                        <!-- <div class="form-group row mt-2 pl-0">
                             <label class="col-sm-3 px-0" for="imgUrl">Image Url</label>
                             <input type="text" id="imgUrl" class="form-control col" name="imgUrl" formControlName="imgUrl">
-                        </div>
+                        </div> -->
 
                         <!-- Error Message -->
                         <div class="form-group row form-outline mb-4 mt-4 text-center" *ngIf="this.errorMessage">
